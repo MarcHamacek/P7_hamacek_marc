@@ -1,0 +1,98 @@
+// Users
+// Create Account
+POST http://localhost:5000/users/signup
+Content-Type: application/json
+
+{
+    "firstName": "Marco",
+    "lastName": "Polo",
+    "department": "Admin",
+    "email": "marcopolo@gmail.com",
+    "password": "1234"
+}
+
+###
+
+// Login account
+POST http://localhost:5000/users/login
+Content-Type: application/json
+
+{
+    "email": "marcopolo@gmail.com",
+    "password": "1234"
+}
+
+###
+// Get All Users / One User
+GET http://localhost:5000/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjgsImlhdCI6MTYxOTc5MjgxMiwiZXhwIjoxNjE5ODc5MjEyfQ.C2Zl-hHqtbfIYPysTKBZruig4sn9lGnzQMg-kiortiE
+
+###
+// Delete user account
+DELETE http://localhost:5000/users/5
+
+
+###
+
+// Posts
+// Create a post
+POST http://localhost:5000/posts
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyLCJpYXQiOjE2MjAxMzkwNjMsImV4cCI6MTYyMDIyNTQ2M30.d-LLNFwhq8RjwoFFyKGFAoeO3Y-0nggcX-gWy-p8OUM
+
+{
+    "title": "Test avec UserId",
+    "content": "Ceci est le premier test",
+    "UserId": 12
+}
+
+###
+// Get all posts
+GET http://localhost:5000/posts
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyLCJpYXQiOjE2MjAxMzkwNjMsImV4cCI6MTYyMDIyNTQ2M30.d-LLNFwhq8RjwoFFyKGFAoeO3Y-0nggcX-gWy-p8OUM
+
+
+###
+// Get one post
+GET http://localhost:5000/posts/7
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyLCJpYXQiOjE2MjAxMzkwNjMsImV4cCI6MTYyMDIyNTQ2M30.d-LLNFwhq8RjwoFFyKGFAoeO3Y-0nggcX-gWy-p8OUM
+
+###
+// Update a post
+PUT http://localhost:5000/posts/8
+Content-Type: application/json
+
+
+{
+    "title": "Post bidon",
+    "content": "Il n'a plus d'user",
+}
+
+###
+// Delete a post
+DELETE http://localhost:5000/posts/9
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyLCJpYXQiOjE2MjAxMzkwNjMsImV4cCI6MTYyMDIyNTQ2M30.d-LLNFwhq8RjwoFFyKGFAoeO3Y-0nggcX-gWy-p8OUM
+
+###
+// Comments
+// Create a comment on a post
+POST http://localhost:5000/posts/9
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyLCJpYXQiOjE2MjAxMzkwNjMsImV4cCI6MTYyMDIyNTQ2M30.d-LLNFwhq8RjwoFFyKGFAoeO3Y-0nggcX-gWy-p8OUM
+
+{
+    "content": "Test avec authentification",
+    "PostId": 9,
+    "UserId": 12
+}
+
+
+###
+// Get all comments from a post
+GET http://localhost:5000/posts/5/comments
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjgsImlhdCI6MTYxOTc5MjgxMiwiZXhwIjoxNjE5ODc5MjEyfQ.C2Zl-hHqtbfIYPysTKBZruig4sn9lGnzQMg-kiortiE
+
+###
+// Delete a comment
+DELETE http://localhost:5000/posts/9/comments/30
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjgsImlhdCI6MTYxOTc5MjgxMiwiZXhwIjoxNjE5ODc5MjEyfQ.C2Zl-hHqtbfIYPysTKBZruig4sn9lGnzQMg-kiortiE
