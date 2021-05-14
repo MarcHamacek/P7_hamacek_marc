@@ -26,7 +26,19 @@ exports.createPost = (req, res) => {
 // Read all posts
 exports.getAllPosts = (req, res) => {
     Post.findAll({
-            include: [Comment, User],
+            include: [
+                User,
+                {
+                    model: Comment,
+                    include: User
+                },
+            ],
+            order: [
+                ["updatedAt", "DESC"],
+                [{
+                    model: Comment
+                }, "updatedAt", "DESC"]
+            ],
         })
         .then(posts => {
             res.status(200).json(posts)
@@ -42,7 +54,18 @@ exports.getOnePost = (req, res) => {
             where: {
                 id: req.params.id
             },
-            include: [Comment, User]
+            include: [
+                User,
+                {
+                    model: Comment,
+                    include: User,
+                },
+            ],
+            order: [
+                [{
+                    model: Comment
+                }, "updatedAt", "DESC"]
+            ],
         })
         .then(post => {
             res.status(200).json(post)
@@ -53,22 +76,39 @@ exports.getOnePost = (req, res) => {
 };
 
 // Update a post
-/*exports.updatePost = (req, res) => {
-    Post.update({
-            title: req.body.title,
-            content: req.body.content
-        }, {
+exports.updatePost = (req, res) => {
+    Post.findOne({
             where: {
                 id: req.params.id
             }
         })
-        .then(() => res.status(200).json({
-            message: 'Votre post a bien été modifié !'
-        }))
-        .catch(error => res.status(400).json({
-            error
+        .then(() => {
+            if (post.UserId === req.token.userId) {
+                Post.update({
+                        title: req.body.title,
+                        content: req.body.content,
+                        UserId: req.body.userId
+                    }, {
+                        where: {
+                            id: req.params.id
+                        }
+                    })
+                    .then(() => res.status(200).json({
+                        message: 'Votre post a bien été modifié !'
+                    }))
+                    .catch(error => res.status(400).json({
+                        error
+                    }));
+            } else {
+                res.status(401).json({
+                    error: "Vous ne disposez pas des droits pour modifier ce post !"
+                });
+            }
+        })
+        .catch(error => res.status(404).json({
+            error: "Post introuvable !"
         }));
-};*/
+};
 
 // Delete a post
 exports.deletePost = (req, res) => {
@@ -84,27 +124,33 @@ exports.deletePost = (req, res) => {
                     }
                 })
                 .then((comment) => {
-                    Comment.destroy({
-                            where: {
-                                postId: req.params.id
-                            }
-                        })
-                        .then(() => {
-                            Post.destroy({
-                                    where: {
-                                        id: req.params.id
-                                    }
-                                })
-                                .then(() => res.status(200).json({
-                                    message: 'Votre post a bien été supprimé !'
-                                }))
-                                .catch(error => res.status(400).json({
-                                    error
-                                }));
-                        })
-                        .catch(error => res.status(400).json({
-                            error
-                        }));
+                    if (post.UserId === req.token.userId || req.token.userId.isAdmin === 1) {
+                        Comment.destroy({
+                                where: {
+                                    postId: req.params.id
+                                }
+                            })
+                            .then(() => {
+                                Post.destroy({
+                                        where: {
+                                            id: req.params.id
+                                        }
+                                    })
+                                    .then(() => res.status(200).json({
+                                        message: 'Votre post a bien été supprimé !'
+                                    }))
+                                    .catch(error => res.status(400).json({
+                                        error
+                                    }));
+                            })
+                            .catch(error => res.status(400).json({
+                                error
+                            }));
+                    } else {
+                        res.status(401).json({
+                            error: "Vous ne disposez pas des droits pour supprimer ce post !"
+                        });
+                    }
                 })
                 .catch(error => res.status(404).json({
                     error
