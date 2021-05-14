@@ -57,9 +57,9 @@
           </div>
         </div>
         <div class="row justify-content-center mt-4">
-          <button type="submit" class="col-6 btn btn-danger">
+          <router-link to="/feed" type="submit" class="col-6 btn btn-danger">
             S'inscrire
-          </button>
+          </router-link>
         </div>
         <div class="row justify-content-center mt-3 pt-2 border-top border-secondary">
           <router-link to="/" class="text-secondary">Retour</router-link>

@@ -24,11 +24,9 @@
       </div>
     </div>
     <div class="row justify-content-center mt-3">
-      <button type="submit" class="col-8 btn btn-danger">Se connecter</button>
+      <router-link to="/feed" type="submit" class="col-8 btn btn-danger">Se connecter</router-link>
     </div>
-    <div
-      class="row justify-content-center mt-4 pt-4 border-top border-secondary"
-    >
+    <div class="row justify-content-center mt-4 pt-4 border-top border-secondary">
       <router-link to="/about" class="col-8 btn btn-secondary">S'incrire</router-link>
     </div>
   </form>
