@@ -11,7 +11,6 @@ const {
 // Create a Post
 exports.createPost = (req, res) => {
     Post.create({
-            title: req.body.title,
             content: req.body.content,
             UserId: req.token.userId
         })
@@ -27,18 +26,8 @@ exports.createPost = (req, res) => {
 exports.getAllPosts = (req, res) => {
     Post.findAll({
             include: [
-                User,
-                {
-                    model: Comment,
-                    include: User
-                },
-            ],
-            order: [
-                ["updatedAt", "DESC"],
-                [{
-                    model: Comment
-                }, "updatedAt", "DESC"]
-            ],
+                User
+            ]
         })
         .then(posts => {
             res.status(200).json(posts)
@@ -82,10 +71,9 @@ exports.updatePost = (req, res) => {
                 id: req.params.id
             }
         })
-        .then(() => {
+        .then(post => {
             if (post.UserId === req.token.userId) {
                 Post.update({
-                        title: req.body.title,
                         content: req.body.content,
                         UserId: req.body.userId
                     }, {
@@ -124,7 +112,7 @@ exports.deletePost = (req, res) => {
                     }
                 })
                 .then((comment) => {
-                    if (post.UserId === req.token.userId || req.token.userId.isAdmin === 1) {
+                    if (post.UserId === req.token.userId || req.token.isAdmin === true) {
                         Comment.destroy({
                                 where: {
                                     postId: req.params.id

@@ -1,35 +1,57 @@
 <template>
   <div class="container">
-    <div class="row border border-secondary mt-3 pt-2 pb-2 justify-content-around">
-      <div class="col">
-        <h5>Bienvenue John Doe !</h5>
-      </div>
-      <div class="col mx-auto">
-        <a type="submit" class="col-4 btn btn-light">Update Profile</a>
-        <a type="submit" class="col-4 btn btn-primary text-white">Add Post</a>
-      </div>
-    </div>
+    <Dashboard />
     <div class="row justify-content-around">
-      <div class="col-4 mt-3">
-        <UsersList />
+      <div class="col-4 border border-primary mt-2 pt-2 pb-3">
+        <Users :users="users"/>
       </div>
-      <div class="col-8 border border-secondary mt-3">
-        <Post />
-        <Post />
+      <div class="col-8 border border-success mt-2 pt-2 pb-3">
+        <AddPost />
+        <Posts :posts="posts" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Post from "../components/Post";
-import UsersList from "../components/UsersList";
+import Dashboard from "../components/Dashboard";
+import AddPost from "../components/AddPost";
+import Users from "../components/Users";
+import Posts from "../components/Posts";
 
 export default {
   name: "Feed",
   components: {
-    Post,
-    UsersList,
+    Dashboard,
+    AddPost,
+    Users,
+    Posts,
+  },
+  data() {
+    return {
+      posts: [],
+      users: [],
+    };
+  },
+  methods: {
+    async fetchPosts() {
+      const res = await fetch("http://localhost:5000/posts");
+
+      const data = await res.json();
+
+      return data;
+    },
+    async fetchUsers() {
+      const res = await fetch("http://localhost:5000/users");
+
+      const data = await res.json();
+
+      return data;
+    },
+  },
+  async created() {
+    this.posts = await this.fetchPosts();
+    this.users = await this.fetchUsers();
   },
 };
 </script>

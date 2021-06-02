@@ -4,10 +4,10 @@ POST http://localhost:5000/users/signup
 Content-Type: application/json
 
 {
-    "firstName": "Ray",
-    "lastName": "Allen",
+    "firstName": "Marco",
+    "lastName": "Polo",
     "department": "Admin",
-    "email": "rayallen@gmail.com",
+    "email": "marcopolo@gmail.com",
     "password": "1234"
 }
 
@@ -40,28 +40,27 @@ DELETE http://localhost:5000/users/2
 // Create a post
 POST http://localhost:5000/posts
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsImlhdCI6MTYyMDk5NjA4MiwiZXhwIjoxNjIxMDgyNDgyfQ.PVF_PvpBGtUK4MaHQDNA-Cy7lwHkghKbSyqh-sqhwKE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2MjE5Nzc3NjUsImV4cCI6MTYyMjA2NDE2NX0.VsqeRIv5Y725kQOkLCn4DxgOOC7KNvybilWKrtCSy9M
 
 {
-    "title": "Test post Ray Allen",
     "content": "Ceci est le premier test"
 }
 
 ###
 // Get all posts
 GET http://localhost:5000/posts
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsImlhdCI6MTYyMDk5NjA4MiwiZXhwIjoxNjIxMDgyNDgyfQ.PVF_PvpBGtUK4MaHQDNA-Cy7lwHkghKbSyqh-sqhwKE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2MjE5Nzc3NjUsImV4cCI6MTYyMjA2NDE2NX0.VsqeRIv5Y725kQOkLCn4DxgOOC7KNvybilWKrtCSy9M
 
 ###
 // Get one post
-GET http://localhost:5000/posts/6
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlhdCI6MTYyMDk5NTg2OSwiZXhwIjoxNjIxMDgyMjY5fQ.Tyz7EjY8skfwv0XRLghnae37r3B9e7Ir7yQl0R7T4s8
+GET http://localhost:5000/posts/7
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImlhdCI6MTYyMTAwMjg1NiwiZXhwIjoxNjIxMDg5MjU2fQ.ojefc0l58LoCfrDz8qkHOJM_e6qsF89djP9_5LPT3jA
 
 ###
 // Update a post
-PUT http://localhost:5000/posts/6
+PUT http://localhost:5000/posts/7
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTYyMDk5NjI3OCwiZXhwIjoxNjIxMDgyNjc4fQ.pPHeU1HQXoZcaKUrDVKtoXCggnDBd_3wi7IRVFzwuSQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImlhdCI6MTYyMTAwMjg1NiwiZXhwIjoxNjIxMDg5MjU2fQ.ojefc0l58LoCfrDz8qkHOJM_e6qsF89djP9_5LPT3jA
 
 {
     "title": "Post bidon",
@@ -70,8 +69,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhd
 
 ###
 // Delete a post
-DELETE http://localhost:5000/posts/6
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTYyMDk5NjU0MywiZXhwIjoxNjIxMDgyOTQzfQ.9-IgBL7f-sTQFVAASo5yZ9SY4zFgsUhf_dzjE3IU81w
+DELETE http://localhost:5000/posts/7
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlzQWRtaW4iOnRydWUsImlhdCI6MTYyMTAwNTc4NCwiZXhwIjoxNjIxMDkyMTg0fQ.nCVbv6kJ9uIJ443yuSJ4f73HgzhNAb14QUsHhg0FgNo
 
 ###
 // Comments

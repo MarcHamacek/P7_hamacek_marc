@@ -12,6 +12,14 @@ sequelize.authenticate()
     .then(() => console.log('Database connected'))
     .catch(err => console.log('Connection to database failed'));
 
+// Configure et autorise les accès extérieurs
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+    next();
+});
+
 
 // Users Routes
 const userRoutes = require('./routes/users');
@@ -25,28 +33,6 @@ app.use('/posts', postRoutes);
 // Stockage Multer
 app.use("/images", express.static(path.join(__dirname, "images")));
 
-
-// Code creating user post & comment
-/*async function test() {
-
-    // Creation post
-    const comments = await Comment.findAll({
-        include: User // where postId: req.params.id
-    });
-
-    console.log(JSON.stringify(comments, null, 2));
-
-    // comments.forEach(comment => {
-    //     const commentS =
-    //  // console.log(comment.user);
-    //  // console.log(`${comment.content} by ${comment.user}`);
-    // });
-
-    // Recuperation tous les posts
-
-    //
-}
-test();*/
 
 // Exportation de l'application
 module.exports = app;

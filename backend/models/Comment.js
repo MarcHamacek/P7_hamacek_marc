@@ -11,6 +11,4 @@ const Comment = sequelize.define("Comment", {
     }
 });
 
-Comment.sync();
-
 module.exports = Comment;

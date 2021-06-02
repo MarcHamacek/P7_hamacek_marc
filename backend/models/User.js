@@ -44,6 +44,11 @@ Post.belongsTo(User);
 User.hasMany(Comment);
 Comment.belongsTo(User);
 
+Post.hasMany(Comment);
+Comment.belongsTo(Post);
+
 User.sync();
+Post.sync();
+Comment.sync();
 
 module.exports = User;

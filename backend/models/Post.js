@@ -5,23 +5,14 @@ const {
 
 
 const Post = sequelize.define("Post", {
-    title: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
     content: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    image: {
+        type: DataTypes.STRING,
+        allowNull: true
     }
 });
-
-
-// Association with Comment
-const Comment = require('./Comment');
-
-Post.hasMany(Comment);
-Comment.belongsTo(Post);
-
-Post.sync();
 
 module.exports = Post;
