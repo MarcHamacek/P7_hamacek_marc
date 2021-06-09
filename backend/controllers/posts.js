@@ -27,6 +27,9 @@ exports.getAllPosts = (req, res) => {
     Post.findAll({
             include: [
                 User
+            ],
+            order: [
+                ['updatedAt', 'DESC']
             ]
         })
         .then(posts => {

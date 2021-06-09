@@ -1,9 +1,9 @@
 <template>
   <form
-    @submit="login"
-    class="container col-10 text-left bg-white border border-danger rounded p-5"
+    @submit.prevent="login"
+    class="col-10 bg-white border border-dark rounded p-5"
   >
-    <div class="row justify-content-center">
+    <div class="form-row justify-content-center">
       <div class="form-group col text-align-start">
         <input
           type="email"
@@ -16,7 +16,7 @@
         />
       </div>
     </div>
-    <div class="row justify-content-center">
+    <div class="form-row justify-content-center">
       <div class="form-group col">
         <input
           type="password"
@@ -28,13 +28,19 @@
         />
       </div>
     </div>
-    <div class="row justify-content-center mt-3">
-      <input type="submit" class="col-8 btn btn-danger" value="Se connecter" />
+    <div class="form-row justify-content-center mt-3">
+      <input type="submit" class="col-8 btn btn-primary" value="Se connecter" />
     </div>
     <div
-      class="row justify-content-center mt-4 pt-4 border-top border-secondary"
+      class="
+        form-row
+        justify-content-center
+        mt-4
+        pt-4
+        border-top border-secondary
+      "
     >
-      <router-link to="/about" class="col-8 btn btn-secondary"
+      <router-link to="/about" class="col-8 btn btn-success"
         >S'incrire</router-link
       >
     </div>
@@ -53,12 +59,13 @@ export default {
     };
   },
   methods: {
-    async login(e) {
-      e.preventDefault();
+    async login() {
       const email = this.user.email;
       const password = this.user.password;
-      const regexEmail = /^[a-z0-9!#$ %& '*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&' * +/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/g;
-      const regexPassword = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})$/;
+      const regexEmail =
+        /^[a-z0-9!#$ %& '*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&' * +/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/g;
+      const regexPassword =
+        /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})$/;
 
       if (
         !email ||
@@ -81,20 +88,25 @@ export default {
           body: JSON.stringify(userLogin),
         });
 
-        const data = await res.json();
+        if (res.status !== 200) {
+          alert("Utilisateur introuvable !");
+        } else {
+          const data = await res.json();
 
-        const groupomaniaUser = {
-          firstName: data.firstName,
-          lastName: data.lastName,
-          department: data.department,
-          email: data.email,
-          token: data.token,
-        };
-        localStorage.setItem(
-          "groupomaniaUser",
-          JSON.stringify(groupomaniaUser)
-        );
-        this.$router.push({ name: "Feed" });
+          const groupomaniaUser = {
+            userId: data.userId,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            department: data.department,
+            email: data.email,
+            token: data.token,
+          };
+          localStorage.setItem(
+            "groupomaniaUser",
+            JSON.stringify(groupomaniaUser)
+          );
+          this.$router.push({ name: "Feed" });
+        }
       }
     },
   },

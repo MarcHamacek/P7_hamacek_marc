@@ -1,5 +1,5 @@
 <template>
-  <div class="container bg-light border-bottom border-secondary">
+  <div class="container bg-dark mb-3 border-bottom border-secondary">
     <div class="row pt-3 pb-3">
       <svg
         data-v-5f19e91b=""
@@ -13,8 +13,8 @@
         <!---->
         <g
           data-v-5f19e91b=""
-          id="35fa3215-a46c-2dc7-0ca7-44149903aade"
-          fill="black"
+          id="b84507ba-a37d-0d6c-3fcb-8fc531264173"
+          fill="white"
           transform="matrix(4.569687698175228,0,0,4.569687698175228,96.32992012448554,-2.2310693714669583)"
         >
           <path
@@ -24,10 +24,10 @@
         <!---->
         <g
           data-v-5f19e91b=""
-          id="c3a0a99d-5b99-a49f-d46f-4168a2d07e26"
+          id="eb8ee116-946f-66a4-a2bb-64183428be89"
           transform="matrix(0.9288891262478298,0,0,0.9288891262478298,183.17781124538936,-199.52452538383787)"
           stroke="none"
-          fill="black"
+          fill="white"
         >
           <switch>
             <g>

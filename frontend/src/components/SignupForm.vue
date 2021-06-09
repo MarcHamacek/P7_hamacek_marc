@@ -1,11 +1,11 @@
 <template>
-  <div class="container pt-5 pb-5 bg-light">
+  <div class="container pt-5 pb-5">
     <div class="row mt-5 mb-5">
       <form
-        @submit="signup"
-        class="container col-6 text-left bg-white border border-danger rounded p-5"
+        @submit.prevent="signup"
+        class="col-6 mx-auto bg-white border border-dark rounded p-5"
       >
-        <div class="row justify-content-center">
+        <div class="form-row justify-content-center">
           <div class="form-group col-5 text-align-start">
             <input
               type="text"
@@ -27,7 +27,7 @@
             />
           </div>
         </div>
-        <div class="row justify-content-center">
+        <div class="form-row justify-content-center">
           <div class="form-group col text-align-start">
             <input
               type="text"
@@ -39,7 +39,7 @@
             />
           </div>
         </div>
-        <div class="row justify-content-center">
+        <div class="form-row justify-content-center">
           <div class="form-group col text-align-start">
             <input
               type="email"
@@ -48,11 +48,11 @@
               class="form-control"
               id="signinInputEmail"
               aria-describedby="emailHelp"
-              placeholder="exemple@exemple.com"
+              placeholder="prenom.nom@exemple.com"
             />
           </div>
         </div>
-        <div class="row justify-content-center">
+        <div class="form-row justify-content-center">
           <div class="form-group col">
             <input
               type="password"
@@ -64,19 +64,25 @@
             />
             <small id="passwordHelp" class="form-text text-muted"
               >Votre mot de passe doit contenir une majuscule, une minuscule, un
-              caractère spécial et un chiffre.</small
+              caractère spécial et un chiffre (entre 8 et 15 caractères).</small
             >
           </div>
         </div>
-        <div class="row justify-content-center mt-4">
+        <div class="form-row justify-content-center mt-4">
           <input
             type="submit"
-            class="col-6 btn btn-danger"
+            class="col-6 btn btn-success"
             value="S'inscrire"
           />
         </div>
         <div
-          class="row justify-content-center mt-3 pt-2 border-top border-secondary"
+          class="
+            form-row
+            justify-content-center
+            mt-3
+            pt-2
+            border-top border-secondary
+          "
         >
           <router-link to="/" class="text-secondary">Retour</router-link>
         </div>
@@ -100,18 +106,26 @@ export default {
     };
   },
   methods: {
-    async signup(e) {
-      e.preventDefault();
-
+    async signup() {
       const firstName = this.user.firstName;
       const lastName = this.user.lastName;
       const department = this.user.department;
       const email = this.user.email;
       const password = this.user.password;
-      const regexEmail = /^[a-z0-9!#$ %& '*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&' * +/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/g;
-      const regexPassword = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})$/;
+      const regexEmail =
+        /^[a-z0-9!#$ %& '*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&' * +/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/g;
+      const regexPassword =
+        /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})$/;
 
-      if (!firstName || !lastName || !department || !email || !password || regexEmail.test(email) == false || regexPassword.test(password) == false) {
+      if (
+        !firstName ||
+        !lastName ||
+        !department ||
+        !email ||
+        !password ||
+        regexEmail.test(email) == false ||
+        regexPassword.test(password) == false
+      ) {
         alert("Veuillez remplir tous les champs !");
       } else {
         const userSignup = {
@@ -131,6 +145,7 @@ export default {
         const data = await res.json();
 
         const groupomaniaUser = {
+          userId: data.userId,
           firstName: data.firstName,
           lastName: data.lastName,
           department: data.department,

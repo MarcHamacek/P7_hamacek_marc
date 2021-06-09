@@ -40,10 +40,10 @@ DELETE http://localhost:5000/users/2
 // Create a post
 POST http://localhost:5000/posts
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2MjE5Nzc3NjUsImV4cCI6MTYyMjA2NDE2NX0.VsqeRIv5Y725kQOkLCn4DxgOOC7KNvybilWKrtCSy9M
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjIzMTQ5MDk0LCJleHAiOjE2MjMyMzU0OTR9.LoqoObtk194QBaRsnSOZhqfFp-Y4fXYWOAL41EHvWYU
 
 {
-    "content": "Ceci est le premier test"
+    "content": "Test Token"
 }
 
 ###
