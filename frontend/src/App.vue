@@ -1,7 +1,9 @@
 <template>
-  <div id="nav">
+  <div id="groupomania">
     <Header />
-    <router-view />
+    <div class="container-fluid">
+      <router-view />
+    </div>
     <Footer />
   </div>
 </template>

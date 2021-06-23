@@ -7,7 +7,7 @@ Content-Type: application/json
     "firstName": "Marco",
     "lastName": "Polo",
     "department": "Admin",
-    "email": "marcopolo@gmail.com",
+    "email": "marcopoloo@gmail.com",
     "password": "1234"
 }
 
@@ -18,16 +18,27 @@ POST http://localhost:5000/users/login
 Content-Type: application/json
 
 {
-    "email": "marcopolo@gmail.com",
+    "email": "marcopoloo@gmail.com",
     "password": "1234"
 }
 
 ###
 // Get All Users / One User
-GET http://localhost:5000/users/2
+GET http://localhost:5000/users
 
 ###
 // Update User Profile
+PUT http://localhost:5000/users/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2MjQyOTkzMDUsImV4cCI6MTYyNDM4NTcwNX0.lf2pmemVaPuWisv6kn_TvauO_Urulv-tVJQVUCDBhnw
+Content-Type: application/json
+
+{
+    "firstName": "Marcos",
+    "lastName": "Polos",
+    "department": "Admin",
+    "email": "marcouspolous@gmail.com",
+    "password": "1234"
+}
 
 ###
 // Delete user account
@@ -40,47 +51,47 @@ DELETE http://localhost:5000/users/2
 // Create a post
 POST http://localhost:5000/posts
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjIzMTQ5MDk0LCJleHAiOjE2MjMyMzU0OTR9.LoqoObtk194QBaRsnSOZhqfFp-Y4fXYWOAL41EHvWYU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI3LCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjIzNzc0NjY2LCJleHAiOjE2MjM4NjEwNjZ9.TQWtBy38i90yKYfJuNb73M09vGncrucJDQZ93vNGNJE
 
 {
-    "content": "Test Token"
+    "content": "Test pour update"
 }
 
 ###
 // Get all posts
 GET http://localhost:5000/posts
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2MjE5Nzc3NjUsImV4cCI6MTYyMjA2NDE2NX0.VsqeRIv5Y725kQOkLCn4DxgOOC7KNvybilWKrtCSy9M
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI3LCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjIzNzc0NjY2LCJleHAiOjE2MjM4NjEwNjZ9.TQWtBy38i90yKYfJuNb73M09vGncrucJDQZ93vNGNJE
 
 ###
 // Get one post
-GET http://localhost:5000/posts/7
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImlhdCI6MTYyMTAwMjg1NiwiZXhwIjoxNjIxMDg5MjU2fQ.ojefc0l58LoCfrDz8qkHOJM_e6qsF89djP9_5LPT3jA
+GET http://localhost:5000/posts/9
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2MjQ0NDI1NjMsImV4cCI6MTYyNDUyODk2M30._hmVYp8jsFKg-62K6IEAujHNU52VdFbOs0gU_mfrIOw
 
 ###
 // Update a post
-PUT http://localhost:5000/posts/7
+PUT http://localhost:5000/posts/28
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImlhdCI6MTYyMTAwMjg1NiwiZXhwIjoxNjIxMDg5MjU2fQ.ojefc0l58LoCfrDz8qkHOJM_e6qsF89djP9_5LPT3jA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI3LCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjIzNzc0NjY2LCJleHAiOjE2MjM4NjEwNjZ9.TQWtBy38i90yKYfJuNb73M09vGncrucJDQZ93vNGNJE
 
 {
-    "title": "Post bidon",
-    "content": "Il n'a plus d'user"
+    "content": "Test update réussi ?"
 }
 
 ###
 // Delete a post
-DELETE http://localhost:5000/posts/7
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlzQWRtaW4iOnRydWUsImlhdCI6MTYyMTAwNTc4NCwiZXhwIjoxNjIxMDkyMTg0fQ.nCVbv6kJ9uIJ443yuSJ4f73HgzhNAb14QUsHhg0FgNo
+DELETE http://localhost:5000/posts/28
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI3LCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjIzNzc0NjY2LCJleHAiOjE2MjM4NjEwNjZ9.TQWtBy38i90yKYfJuNb73M09vGncrucJDQZ93vNGNJE
 
 ###
 // Comments
 // Create a comment on a post
-POST http://localhost:5000/posts/6
+POST http://localhost:5000/posts/9
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2MjQ0NDI1NjMsImV4cCI6MTYyNDUyODk2M30._hmVYp8jsFKg-62K6IEAujHNU52VdFbOs0gU_mfrIOw
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsImlhdCI6MTYyMDk5NjA4MiwiZXhwIjoxNjIxMDgyNDgyfQ.PVF_PvpBGtUK4MaHQDNA-Cy7lwHkghKbSyqh-sqhwKE
 
 {
-    "content": "Test avec authentification"
+    "content": "Test Commentaire 1",
+    "PostId": "9"
 }
 
 

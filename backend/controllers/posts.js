@@ -1,6 +1,7 @@
 const Post = require('../models/Post');
 const Comment = require('../models/Comment');
 const User = require('../models/User');
+const fs = require('fs-extra');
 const {
     json
 } = require('body-parser');
@@ -10,8 +11,16 @@ const {
 
 // Create a Post
 exports.createPost = (req, res) => {
+    const postObject = req.file ? {
+        content: req.body.content,
+        image: `${req.protocol}://${req.get("host")}/images/${
+            req.file.filename
+          }`,
+    } : {
+        content: req.body.content
+    };
     Post.create({
-            content: req.body.content,
+            ...postObject,
             UserId: req.token.userId
         })
         .then(() => res.status(201).json({
@@ -108,54 +117,51 @@ exports.deletePost = (req, res) => {
                 id: req.params.id
             }
         })
-        .then(post => {
-            Comment.findAll({
-                    where: {
-                        postId: req.params.id
-                    }
-                })
-                .then((comment) => {
-                    if (post.UserId === req.token.userId || req.token.isAdmin === true) {
-                        Comment.destroy({
+        .then((post) => {
+            if (post.UserId === req.token.userId || req.token.isAdmin === true) {
+                if (post.image) {
+                    const filename = post.image.split("/images/")[1];
+                    fs.unlink(`./images/${filename}`, () => {
+                        Post.destroy({
                                 where: {
-                                    postId: req.params.id
+                                    id: post.id
                                 }
                             })
-                            .then(() => {
-                                Post.destroy({
-                                        where: {
-                                            id: req.params.id
-                                        }
-                                    })
-                                    .then(() => res.status(200).json({
-                                        message: 'Votre post a bien été supprimé !'
-                                    }))
-                                    .catch(error => res.status(400).json({
-                                        error
-                                    }));
-                            })
+                            .then(() => res.status(200).json({
+                                message: "Votre post a bien été supprimé !"
+                            }))
                             .catch(error => res.status(400).json({
                                 error
                             }));
-                    } else {
-                        res.status(401).json({
-                            error: "Vous ne disposez pas des droits pour supprimer ce post !"
-                        });
-                    }
-                })
-                .catch(error => res.status(404).json({
-                    error
-                }))
+                    })
+                } else {
+                    Post.destroy({
+                            where: {
+                                id: post.id
+                            }
+                        })
+                        .then(() => res.status(200).json({
+                            message: "Votre post a bien été supprimé !"
+                        }))
+                        .catch(error => res.status(400).json({
+                            error
+                        }));
+                }
+            } else {
+                res.status(401).json({
+                    error: "Vous ne disposez pas des droits pour supprimer ce post !"
+                });
+            }
         })
         .catch(error => res.status(500).json({
             error
         }));
 };
 
+
 // COMMENTS
 
 // Add a comment to a post
-// Voir problème avec UserId
 exports.commentPost = (req, res) => {
     Comment.create({
             content: req.body.content,

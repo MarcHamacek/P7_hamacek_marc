@@ -2,7 +2,6 @@
   <div class="container-fluid pt-5 pb-5">
     <div class="row mt-5 mb-5">
       <form
-        @submit.prevent="signup"
         class="col-10 col-xl-4 mx-auto bg-white border border-dark rounded p-5"
       >
         <div class="form-row justify-content-center">
@@ -60,7 +59,7 @@
               v-model="user.password"
               class="form-control"
               id="signinInputPassword"
-              placeholder="Mot de passe"
+              placeholder="***********"
             />
             <small id="passwordHelp" class="form-text text-muted"
               >Votre mot de passe doit contenir une majuscule, une minuscule, un
@@ -70,9 +69,10 @@
         </div>
         <div class="form-row justify-content-center mt-4">
           <input
+            @click.prevent="modifyUser"
             type="submit"
             class="col-6 btn btn-success"
-            value="S'inscrire"
+            value="Mettre à jour"
           />
         </div>
         <div
@@ -84,16 +84,15 @@
             border-top border-secondary
           "
         >
-          <router-link to="/" class="text-secondary">Retour</router-link>
+          <router-link to="/feed" class="text-secondary">Retour</router-link>
         </div>
       </form>
     </div>
   </div>
 </template>
-
 <script>
 export default {
-  name: "SignupForm",
+  name: "ProfileUpdate",
   data() {
     return {
       user: {
@@ -106,7 +105,14 @@ export default {
     };
   },
   methods: {
-    async signup() {
+    getUserConnected() {
+      const res = localStorage.getItem("groupomaniaUser");
+
+      const data = JSON.parse(res);
+
+      return data;
+    },
+    async modifyUser() {
       const firstName = this.user.firstName;
       const lastName = this.user.lastName;
       const department = this.user.department;
@@ -116,6 +122,11 @@ export default {
         /^[a-z0-9!#$ %& '*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&' * +/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/g;
       const regexPassword =
         /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})$/;
+
+      const user = localStorage.getItem("groupomaniaUser");
+      const data = JSON.parse(user);
+      const id = data.userId;
+      const token = data.token;
 
       if (
         !firstName ||
@@ -128,21 +139,23 @@ export default {
       ) {
         alert("Veuillez remplir tous les champs !");
       } else {
-        const userSignup = {
+        const userUpdated = {
           firstName,
           lastName,
           department,
           email,
           password,
         };
-        const res = await fetch("http://localhost:5000/users/signup", {
-          method: "POST",
+        const res = await fetch(`http://localhost:5000/users/${id}`, {
+          method: "PUT",
           headers: {
+            Authorization: "Bearer " + token,
             "Content-type": "application/json",
           },
-          body: JSON.stringify(userSignup),
+          body: JSON.stringify(userUpdated),
         });
         const data = await res.json();
+
         // Optimiser : groupomaniaUser à la place de data idem pour login
         const groupomaniaUser = {
           userId: data.userId,
@@ -151,7 +164,6 @@ export default {
           department: data.department,
           email: data.email,
           token: data.token,
-          isAdmin: data.isAdmin,
         };
         localStorage.setItem(
           "groupomaniaUser",
@@ -160,6 +172,9 @@ export default {
         this.$router.push({ name: "Feed" });
       }
     },
+  },
+  created() {
+    this.user = this.getUserConnected();
   },
 };
 </script>

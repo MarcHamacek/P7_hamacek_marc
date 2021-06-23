@@ -1,5 +1,5 @@
 <template>
-  <div class="about">
+  <div>
     <SignupForm />
   </div>
 </template>
@@ -8,7 +8,7 @@
 import SignupForm from "../components/SignupForm"
 
 export default {
-  name: "About",
+  name: "Signup",
   components: {
     SignupForm
   }

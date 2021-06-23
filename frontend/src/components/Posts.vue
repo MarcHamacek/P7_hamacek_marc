@@ -1,7 +1,9 @@
 <template>
-  <div class="col-8 border border-success mt-2 pt-2 pb-3">
+  <div class="col border border-success mt-2 pt-2 pb-3">
     <AddPost />
-    <Post :posts="posts" />
+    <div :key="post.id" v-for="post in posts">
+      <Post :post="post" />
+    </div>
   </div>
 </template>
 

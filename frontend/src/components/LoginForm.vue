@@ -1,7 +1,7 @@
 <template>
   <form
     @submit.prevent="login"
-    class="col-10 bg-white border border-dark rounded p-5"
+    class="col-sm-6 bg-white border border-dark rounded p-5"
   >
     <div class="form-row justify-content-center">
       <div class="form-group col text-align-start">
@@ -40,7 +40,7 @@
         border-top border-secondary
       "
     >
-      <router-link to="/about" class="col-8 btn btn-success"
+      <router-link to="/signup" class="col-8 btn btn-success"
         >S'incrire</router-link
       >
     </div>
@@ -100,6 +100,7 @@ export default {
             department: data.department,
             email: data.email,
             token: data.token,
+            isAdmin: data.isAdmin,
           };
           localStorage.setItem(
             "groupomaniaUser",

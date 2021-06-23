@@ -134,27 +134,61 @@ exports.getOneUser = (req, res) => {
 };
 
 // Update an account
-// exports.updateAccount = (req, res) => {
-//     User.findOne({
-//             where: {
-//                 id: req.params.id
-//             }
-//         })
-//         .then(() => {
-//             User.update({
-//                     firstName: req.body.firstName,
-//                     lastName: req.body.lastName,
-//                     department: req.body.department,
-//                     email: req.body.email,
-//                     password: hash
-//                 })
-//                 .then()
-//                 .catch();
-//         })
-//         .catch(error => res.status(404).json({
-//             error: "Utilisateur introuvable !"
-//         }));
-// };
+exports.modifyUser = (req, res) => {
+    console.log(req.params.id);
+    User.findOne({
+            where: {
+                id: req.params.id
+            },
+        })
+        .then(user => {
+            if (user.id === req.token.userId) {
+                bcrypt
+                    .hash(req.body.password, 10)
+                    .then((hash) => {
+                        User.update({
+                                firstName: req.body.firstName,
+                                lastName: req.body.lastName,
+                                department: req.body.department,
+                                email: req.body.email,
+                                password: hash
+                            }, {
+                                where: {
+                                    id: req.params.id
+                                }
+                            })
+                            .then((user) => res.status(200).json({
+                                message: "Votre profil a bien été modifié !",
+                                firstName: user.firstName,
+                                lastName: user.lastName,
+                                department: user.department,
+                                email: user.email,
+                                userId: user.id,
+                                isAdmin: user.isAdmin,
+                                token: jwt.sign({
+                                        userId: user.id,
+                                        isAdmin: user.isAdmin
+                                    },
+                                    process.env.TOKEN_KEY, {
+                                        expiresIn: "24h"
+                                    }
+                                )
+                            }))
+                            .catch(error => res.status(400).json({
+                                error
+                            }));
+                    })
+
+            } else {
+                res.status(401).json({
+                    error: "Vous ne disposez pas des droits pour modifier ce post !"
+                });
+            }
+        })
+        .catch(error => res.status(404).json({
+            error: "Utilisateur introuvable !"
+        }));
+};
 
 // Delete an account
 exports.deleteAccount = (req, res) => {

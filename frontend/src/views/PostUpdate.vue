@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="createPost" class="col border border-dark p-3">
+  <form @submit.prevent="modifyPost" class="col border border-dark p-3">
     <div class="form-row form-group">
       <input
         class="col form-control-lg"
@@ -11,17 +11,21 @@
       />
     </div>
     <div class="form-row justify-content-center">
-      <input type="file" accept="image/png, image/jpeg, image/jpg" class="btn btn-link" />
+      <input
+        type="file"
+        accept="image/png, image/jpeg, image/jpg"
+        class="btn btn-link"
+      />
     </div>
     <div class="form-row justify-content-center">
-      <input type="submit" class="col-2 btn btn-primary" value="Publier" />
+      <input type="submit" class="col-2 btn btn-primary" value="Modifier" />
+      <router-link class="col-2 btn btn-dark" to="/feed">Retour</router-link>
     </div>
   </form>
 </template>
-
 <script>
 export default {
-  name: "AddPost",
+  name: "PostUpdate",
   data() {
     return {
       post: {
@@ -31,35 +35,36 @@ export default {
     };
   },
   methods: {
-    async createPost() {
+    async modifyPost() {
       const content = this.post.content;
       const image = this.post.image;
       if (!content) {
         alert("Veuillez remplir tous les champs !");
         return;
       } else {
+        const id = localStorage.getItem("postId");
+
         const data = localStorage.getItem("groupomaniaUser");
         const user = JSON.parse(data);
         const token = user.token;
-        const userId = user.userId;
-        const newPost = {
+
+        const modifiedPost = {
           content,
           image,
-          userId,
         };
-        const res = await fetch("http://localhost:5000/posts", {
-          method: "POST",
+        const res = await fetch(`http://localhost:5000/posts/${id}`, {
+          method: "PUT",
           headers: {
             Authorization: "Bearer " + token,
             "Content-type": "application/json",
           },
-          body: JSON.stringify(newPost),
+          body: JSON.stringify(modifiedPost),
         });
-        if (res.status !== 201) {
-          alert("Votre post n'a pas pu être publié !");
-          return;
+        if (res.status !== 200) {
+          alert("Votre publication n'a pu être modifiée !");
         } else {
-          this.$router.go();
+          localStorage.removeItem("postId");
+          this.$router.push({ name: "Feed" });
         }
       }
     },

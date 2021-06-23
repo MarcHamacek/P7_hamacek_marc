@@ -38,13 +38,22 @@ const User = sequelize.define("User", {
 const Post = require('./Post');
 const Comment = require('./Comment');
 
-User.hasMany(Post);
+User.hasMany(Post, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+});
 Post.belongsTo(User);
 
-User.hasMany(Comment);
+User.hasMany(Comment, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+});
 Comment.belongsTo(User);
 
-Post.hasMany(Comment);
+Post.hasMany(Comment, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
+});
 Comment.belongsTo(Post);
 
 User.sync();

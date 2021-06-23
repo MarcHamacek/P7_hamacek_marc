@@ -1,5 +1,5 @@
 <template>
-  <div class="container bg-dark mb-3 border-bottom border-secondary">
+  <div class="container-fluid bg-dark mb-3 border-bottom border-secondary">
     <div class="row pt-3 pb-3">
       <svg
         data-v-5f19e91b=""

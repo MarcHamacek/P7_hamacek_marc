@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
+  <div class="container-fluid col-10 col-lg-8">
+    <Dashboard />
     <div class="row justify-content-around">
-      <Dashboard :users="users" />
       <Posts :posts="posts" />
     </div>
   </div>
@@ -20,7 +20,6 @@ export default {
   data() {
     return {
       posts: [],
-      users: [],
     };
   },
   methods: {
@@ -31,17 +30,9 @@ export default {
 
       return data;
     },
-    async fetchUsers() {
-      const res = await fetch("http://localhost:5000/users");
-
-      const data = await res.json();
-
-      return data;
-    },
   },
   async created() {
     this.posts = await this.fetchPosts();
-    this.users = await this.fetchUsers();
   },
 };
 </script>
