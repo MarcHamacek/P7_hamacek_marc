@@ -67,6 +67,9 @@
             >
           </div>
         </div>
+        <div class="form-row justify-content-center">
+          <p class="font-italic">Vous serez redirigé vers la page d'accueil.</p>
+        </div>
         <div class="form-row justify-content-center mt-4">
           <input
             @click.prevent="modifyUser"
@@ -154,22 +157,30 @@ export default {
           },
           body: JSON.stringify(userUpdated),
         });
-        const data = await res.json();
 
-        // Optimiser : groupomaniaUser à la place de data idem pour login
-        const groupomaniaUser = {
-          userId: data.userId,
-          firstName: data.firstName,
-          lastName: data.lastName,
-          department: data.department,
-          email: data.email,
-          token: data.token,
-        };
-        localStorage.setItem(
-          "groupomaniaUser",
-          JSON.stringify(groupomaniaUser)
-        );
-        this.$router.push({ name: "Feed" });
+        if (res.status !== 200) {
+          alert("Votre profil n'a pas pu être mis à jour !");
+        } else {
+          alert("Votre profil a bien été mis à jour !");
+          localStorage.clear();
+          this.$router.push({ name: "Home" });
+        }
+        // const data = await res.json();
+
+        // // Optimiser : groupomaniaUser à la place de data idem pour login
+        // const groupomaniaUser = {
+        //   userId: data.userId,
+        //   firstName: data.firstName,
+        //   lastName: data.lastName,
+        //   department: data.department,
+        //   email: data.email,
+        //   token: data.token,
+        // };
+        // localStorage.setItem(
+        //   "groupomaniaUser",
+        //   JSON.stringify(groupomaniaUser)
+        // );
+        //
       }
     },
   },

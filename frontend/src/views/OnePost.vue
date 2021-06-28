@@ -1,53 +1,52 @@
 <template>
-  <div class="border border-secondary rounded mt-3">
-    <router-link @click.prevent="clearLocalStorage" to="/feed"
-      >Retour</router-link
-    >
-    <div class="col">
-      <div
-        class="
-          row
-          justify-content-between
-          bg-light
-          border-bottom border-secondary
-          pl-2
-          pr-2
-        "
-      >
+  <div class="post">
+    <router-link @click.prevent="deletePostId" to="/feed">Retour</router-link>
+
+    <p>{{ post }}</p>
+    <div class="col border border-secondary rounded">
+      <div class="row">
+        <p>{{ post.content }}</p>
+      </div>
+      <div class="row justify-content-center">
+        <div class="card-body border border-dark">
+          <div class="row">
+            <input
+              type="text"
+              placeholder="Commentez..."
+              name="comment"
+              v-model="post.Comments.content"
+            />
+          </div>
+          <div class="row">
+            <input
+              @click.prevent="commentPost"
+              class="btn btn-primary"
+              type="submit"
+              value="Commenter"
+            />
+          </div>
+        </div>
+      </div>
+      <div :key="comment.id" v-for="comment in post.Comments" class="row">
+        <p>{{ comment.User.firstName }} {{ comment.User.lastName }}</p>
+        <p>{{ comment.updatedAt }}</p>
+        <p>{{ comment.content }}</p>
+        <p>{{ comment.id }}</p>
         <p>
-          {{ post.User.firstName }} {{ post.User.lastName }}
-          {{ post.updatedAt }}
-        </p>
-        <p>
-          <router-link to="/postUpdate"
+          <router-link
+            to="/updateComment"
+            @click.prevent="storeCommentId(comment.id)"
             ><i class="far fa-edit text-dark"></i
           ></router-link>
         </p>
         <p>
-          <a href="#" type="button">
-            <i
-              @click.prevent="deletePost"
-              class="fas fa-times text-danger text-right"
+          <a href="#" type="button"
+            ><i
+              @click.prevent="deleteComment(comment.id)"
+              class="fas fa-times text-danger"
             ></i
           ></a>
         </p>
-      </div>
-      <div class="card-body">
-        <img src="" alt="" />
-      </div>
-      <div class="card-body">
-        <p class="card-text">
-          {{ post.content }}
-        </p>
-      </div>
-      <div class="card-body bg-light">
-        <input type="text" name="comment" v-model="post.comment.content" />
-        <input
-          @click.prevent="commentPost"
-          class="btn btn-primary"
-          type="submit"
-          value="Commenter"
-        />
       </div>
     </div>
   </div>
@@ -59,18 +58,8 @@ export default {
   data() {
     return {
       post: {
-        id: "",
-        content: "",
-        image: "",
-        updatedAt: "",
-        User: {
-          firstName: "",
-          lastName: "",
-        },
-        comment: {
-          content: "",
-          PostId: "",
-        },
+        User: [],
+        Comments: [],
       },
     };
   },
@@ -78,8 +67,7 @@ export default {
     async fetchOnePost() {
       const user = JSON.parse(localStorage.getItem("groupomaniaUser"));
       const token = user.token;
-      const postId = localStorage.getItem("postId");
-      const id = JSON.stringify(postId);
+      const id = localStorage.getItem("postId");
 
       const res = await fetch(`http://localhost:5000/posts/${id}`, {
         headers: {
@@ -91,40 +79,66 @@ export default {
 
       return data;
     },
-    async deletePost() {
+
+    async commentPost() {
+      const content = this.post.Comments.content;
+
       const user = JSON.parse(localStorage.getItem("groupomaniaUser"));
       const token = user.token;
-      const postId = localStorage.getItem("postId");
-      const id = JSON.stringify(postId);
 
-      const res = await fetch(`http://localhost:5000/posts/${id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      });
-      if (res.status === 200) {
-        alert("Votre publication a bien été supprimée !");
-        this.$router.push({ name: "Feed" });
+      const postId = localStorage.getItem("postId");
+
+      const comment = { content, token, postId };
+
+      if (!content) {
+        alert("Veuillez écrire votre commentaire !");
       } else {
-        alert("Votre publication n'a pas pu être supprimée !");
+        const res = await fetch(
+          `http://localhost:5000/posts/${postId}/comments`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: "Bearer " + token,
+              "Content-type": "application/json",
+            },
+            body: JSON.stringify(comment),
+          }
+        );
+        if (res.status !== 201) {
+          alert("Votre commentaire n'a pas pu être publié !");
+        } else {
+          this.$router.go();
+        }
       }
     },
-    commentPost() {
-    //   const user = JSON.parse(localStorage.getItem("groupomaniaUser"));
-    //   const token = user.token;
-      const id = localStorage.getItem("postId");
-      const PostId = JSON.stringify(id);
-      const content = this.post.comment.content;
-      const comment = {
-        content,
-        PostId,
-      };
-      console.log(comment);
-      //   if (!content) {
-      //     alert("Veuillez remplir tous les champs !");
-      //   } else {
-      //   }
+    async deleteComment(id) {
+      const commentId = id;
+
+      const user = JSON.parse(localStorage.getItem("groupomaniaUser"));
+      const token = user.token;
+
+      const res = await fetch(
+        `http://localhost:5000/posts/comments/${commentId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      if (res.status !== 200) {
+        alert("Votre commentaire n'a pas pu être supprimé !");
+      } else {
+        this.$router.go();
+      }
+    },
+    deletePostId() {
+      localStorage.removeItem("postId");
+    },
+    storeCommentId(id) {
+      const commentId = id;
+      localStorage.setItem("commentId", JSON.stringify(commentId));
+      console.log(commentId);
     },
     clearLocalStorage() {
       localStorage.removeItem("postId");

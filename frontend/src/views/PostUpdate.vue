@@ -19,7 +19,7 @@
     </div>
     <div class="form-row justify-content-center">
       <input type="submit" class="col-2 btn btn-primary" value="Modifier" />
-      <router-link class="col-2 btn btn-dark" to="/feed">Retour</router-link>
+      <router-link @click.prevent="deletePostId" class="col-2 btn btn-dark" to="/feed">Retour</router-link>
     </div>
   </form>
 </template>
@@ -67,6 +67,9 @@ export default {
           this.$router.push({ name: "Feed" });
         }
       }
+    },
+    deletePostId() {
+      localStorage.removeItem("postId");
     },
   },
 };

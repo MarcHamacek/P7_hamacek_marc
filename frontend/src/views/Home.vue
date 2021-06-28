@@ -1,6 +1,5 @@
 <template>
-  <div class="container-fluid pt-5 pb-5">
-    
+  <div class="container-fluid text-center pt-5 pb-5">
     <div class="row mt-5 mb-5">
       <div class="col">
         <h4 class="mt-4 mb-4">
@@ -8,10 +7,8 @@
         </h4>
       </div>
     </div>
-    <div class="row">
-      <div class="col">
-        <LoginForm />
-      </div>
+    <div>
+      <LoginForm />
     </div>
   </div>
 </template>

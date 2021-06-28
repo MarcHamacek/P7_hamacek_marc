@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid col-10 col-lg-8">
+  <div class="container-fluid col col-lg-10">
     <Dashboard />
     <div class="row justify-content-around">
       <Posts :posts="posts" />

@@ -38,7 +38,12 @@ const routes = [{
     path: '/onePost',
     name: 'OnePost',
     component: () => import('../views/OnePost')
-  }
+  },
+  {
+    path: '/updateComment',
+    name: 'UpdateComment',
+    component: () => import('../views/UpdateComment')
+  },
 ]
 
 const router = createRouter({

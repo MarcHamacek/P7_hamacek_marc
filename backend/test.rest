@@ -18,8 +18,8 @@ POST http://localhost:5000/users/login
 Content-Type: application/json
 
 {
-    "email": "marcopoloo@gmail.com",
-    "password": "1234"
+    "email": "marcopolo@gmail.com",
+    "password": "$Polochon33"
 }
 
 ###
@@ -51,21 +51,21 @@ DELETE http://localhost:5000/users/2
 // Create a post
 POST http://localhost:5000/posts
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI3LCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjIzNzc0NjY2LCJleHAiOjE2MjM4NjEwNjZ9.TQWtBy38i90yKYfJuNb73M09vGncrucJDQZ93vNGNJE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2MjQ4OTA3NzAsImV4cCI6MTYyNDk3NzE3MH0.71k1lKi13heD3ogNp6RwhYZm5XLXuU0X1xMEl6MIXLs
 
 {
-    "content": "Test pour update"
+    "content": "Test pour Delete comment"
 }
 
 ###
 // Get all posts
 GET http://localhost:5000/posts
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI3LCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjIzNzc0NjY2LCJleHAiOjE2MjM4NjEwNjZ9.TQWtBy38i90yKYfJuNb73M09vGncrucJDQZ93vNGNJE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2MjQ4OTA3NzAsImV4cCI6MTYyNDk3NzE3MH0.71k1lKi13heD3ogNp6RwhYZm5XLXuU0X1xMEl6MIXLs
 
 ###
 // Get one post
-GET http://localhost:5000/posts/9
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2MjQ0NDI1NjMsImV4cCI6MTYyNDUyODk2M30._hmVYp8jsFKg-62K6IEAujHNU52VdFbOs0gU_mfrIOw
+GET http://localhost:5000/posts/12
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2MjQ4OTA3NzAsImV4cCI6MTYyNDk3NzE3MH0.71k1lKi13heD3ogNp6RwhYZm5XLXuU0X1xMEl6MIXLs
 
 ###
 // Update a post
@@ -85,13 +85,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI3LCJpc
 ###
 // Comments
 // Create a comment on a post
-POST http://localhost:5000/posts/9
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2MjQ0NDI1NjMsImV4cCI6MTYyNDUyODk2M30._hmVYp8jsFKg-62K6IEAujHNU52VdFbOs0gU_mfrIOw
+POST http://localhost:5000/posts/12/comments
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2MjQ4OTA3NzAsImV4cCI6MTYyNDk3NzE3MH0.71k1lKi13heD3ogNp6RwhYZm5XLXuU0X1xMEl6MIXLs
 Content-Type: application/json
 
 {
-    "content": "Test Commentaire 1",
-    "PostId": "9"
+    "content": "Test Commentaire pour delete",
+    "PostId": "12",
+    "UserId": "5"
 }
 
 
@@ -102,5 +103,5 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhd
 
 ###
 // Delete a comment
-DELETE http://localhost:5000/posts/1/comments/1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTYyMDkwODk3MCwiZXhwIjoxNjIwOTk1MzcwfQ.8WM_LkGB1an6ATLR1AnF36BZOE5uQfVQJYFnpJbZUDU
+DELETE http://localhost:5000/posts/comments/12
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2MjQ4OTA3NzAsImV4cCI6MTYyNDk3NzE3MH0.71k1lKi13heD3ogNp6RwhYZm5XLXuU0X1xMEl6MIXLs

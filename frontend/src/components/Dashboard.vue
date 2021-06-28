@@ -1,7 +1,7 @@
 <template>
   <div class="row border border-secondary">
     <div class="col">
-      <nav class="navbar navbar-expand-sm navbar-light">
+      <nav class="navbar navbar-light">
         <div class="card-body border border-secondary">
           <h6 class="card-text">
             <i class="fas fa-user text-secondary"></i> {{ user.firstName }}
@@ -27,25 +27,33 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="collapse navbar-collapse mt-3 mb-3" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <router-link to="/usersList" class="btn btn-light">
+              <router-link to="/usersList" class="col-4 btn btn-light">
                 <i class="fas fa-user-friends"></i> Utilisateurs
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link to="/profileUpdate" class="col-10 btn btn-primary">
+              <router-link to="/profileUpdate" class="col-4 btn btn-primary">
                 <i class="fas fa-edit"></i> Modifier mon profil
               </router-link>
             </li>
             <li class="nav-item">
-              <a @click.prevent="logout" class="btn btn-secondary" href="#">
+              <a
+                @click.prevent="logout"
+                class="col-4 btn btn-secondary"
+                href="#"
+              >
                 <i class="fas fa-sign-out-alt"></i> Déconnexion
               </a>
             </li>
             <li class="nav-item">
-              <a @click.prevent="deleteUser" href="#" class="btn btn-danger">
+              <a
+                @click.prevent="deleteUser"
+                href="#"
+                class="col-4 btn btn-danger"
+              >
                 <i class="fas fa-trash-alt"></i> Supprimer mon compte
               </a>
             </li>
@@ -88,12 +96,14 @@ export default {
         const res = await fetch(`http://localhost:5000/users/${id}`, {
           method: "DELETE",
         });
-        res.status === 200
-          ? alert("Votre compte a bien été supprimé !")
-          : alert("Nous n'avons pas pu supprimer votre compte !");
+        if (res.status === 200) {
+          alert("Votre compte a bien été supprimé !");
+          localStorage.clear();
+          this.$router.push({ name: "Home" });
+        } else {
+          alert("Nous n'avons pas pu supprimer votre compte !");
+        }
       }
-      localStorage.clear();
-      this.$router.push({ name: "Home" });
     },
     logout() {
       localStorage.clear();

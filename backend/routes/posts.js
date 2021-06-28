@@ -14,9 +14,10 @@ router.delete('/:id', auth, postsCtrl.deletePost); // TEST OK
 
 
 // Routes Comments
-router.post('/:id', auth, postsCtrl.commentPost);
+router.post('/:id/comments', auth, postsCtrl.commentPost);
 router.get('/:id/comments', postsCtrl.getAllComments);
-router.delete('/:id/comments/:id', postsCtrl.deleteComment);
+router.put('/comments/:id', auth, postsCtrl.updateComment);
+router.delete('/comments/:id', auth, postsCtrl.deleteComment);
 
 
 module.exports = router;

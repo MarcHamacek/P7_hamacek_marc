@@ -65,7 +65,7 @@ exports.getOnePost = (req, res) => {
             order: [
                 [{
                     model: Comment
-                }, "updatedAt", "DESC"]
+                }, "updatedAt", "ASC"]
             ],
         })
         .then(post => {
@@ -180,7 +180,7 @@ exports.commentPost = (req, res) => {
 exports.getAllComments = (req, res) => {
     Comment.findAll({
             where: {
-                postId: req.params.id
+                PostId: req.params.id
             },
             include: [User]
         })
@@ -191,7 +191,38 @@ exports.getAllComments = (req, res) => {
 };
 
 // Update a comment on a post
-
+exports.updateComment = (req, res) => {
+    Comment.findOne({
+            where: {
+                id: req.params.id
+            }
+        })
+        .then((comment) => {
+            if (comment.UserId === req.token.userId) {
+                Comment.update({
+                    content: req.body.content,
+                    UserId: req.token.id,
+                }, {
+                    where: {
+                        id: req.params.id
+                    }
+                })
+                .then(() => res.status(200).json({
+                    message: 'Votre commentaire a bien été modifié !'
+                }))
+                .catch(error => res.status(400).json({
+                    error
+                }));
+            } else {
+                res.status(401).json({
+                    error: "Vous ne disposez pas des droits pour modifier ce commentaire !"
+                })
+            }
+        })
+        .catch(error => res.status(404).json({
+            error
+        }));
+};
 
 // Delete a comment on a post
 exports.deleteComment = (req, res) => {
@@ -200,18 +231,24 @@ exports.deleteComment = (req, res) => {
                 id: req.params.id
             }
         })
-        .then((comments) => {
-            Comment.destroy({
-                    where: {
-                        id: req.params.id
-                    }
-                })
-                .then(() => res.status(200).json({
-                    message: 'Votre commentaire a bien été supprimé !'
-                }))
-                .catch(error => res.status(400).json({
-                    error
-                }));
+        .then((comment) => {
+            if (comment.UserId === req.token.userId || req.token.isAdmin === true) {
+                Comment.destroy({
+                        where: {
+                            id: req.params.id
+                        }
+                    })
+                    .then(() => res.status(200).json({
+                        message: 'Votre commentaire a bien été supprimé !'
+                    }))
+                    .catch(error => res.status(400).json({
+                        error
+                    }));
+            } else {
+                res.status(401).json({
+                    error: "Vous ne disposez pas des droits pour supprimer ce post !"
+                });
+            }
         })
         .catch((error) => res.status(500).json({
             error
