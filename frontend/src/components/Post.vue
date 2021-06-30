@@ -1,47 +1,65 @@
 <template>
-  <div class="border border-secondary rounded mt-3">
-    <div class="col">
-      <div
-        class="
-          row
-          justify-content-between
-          bg-light
-          border-bottom border-secondary
-          pl-2
-          pr-2
-        "
-      >
-        <p>
+  <div>
+    <div class="card mt-3">
+      <div class="card-body">
+        <h5 class="card-title">
           {{ post.User.firstName }} {{ post.User.lastName }}
-          {{ post.updatedAt }}
-        </p>
-        <p>
-          <router-link @click.prevent="storePostId" to="/postUpdate"
-            ><i class="far fa-edit text-dark"></i
-          ></router-link>
-        </p>
-        <p>
-          <a href="#" type="button">
-            <i
-              @click.prevent="deletePost"
-              class="fas fa-times text-danger text-right"
-            ></i
-          ></a>
-        </p>
+        </h5>
+        <p class="card-text">{{ post.updatedAt }}</p>
       </div>
+      <img class="card-img-top" :src="post.image" :alt="post.content" />
       <div class="card-body">
-        <img src="" alt="" />
-      </div>
-      <div class="card-body">
-        <p class="card-text">
-          {{ post.content }}
-        </p>
+        <h6 class="card-title">{{ post.content }}</h6>
         <router-link
           @click.prevent="storePostId"
           to="/onePost"
-          class="text-dark"
+          class="btn btn-info"
           >Voir commentaires</router-link
         >
+      </div>
+    </div>
+    <div class="border border-secondary rounded mt-3">
+      <div class="col">
+        <div
+          class="
+            row
+            justify-content-between
+            bg-light
+            border-bottom border-secondary
+            pl-2
+            pr-2
+          "
+        >
+          <p>
+            {{ post.User.firstName }} {{ post.User.lastName }}
+            {{ post.updatedAt }}
+          </p>
+          <p>
+            <router-link @click.prevent="storePostId" to="/postUpdate"
+              ><i class="far fa-edit text-dark"></i
+            ></router-link>
+            <a href="#" type="button">
+              <i
+                @click.prevent="deletePost"
+                class="fas fa-times text-danger text-right"
+              ></i
+            ></a>
+          </p>
+        </div>
+        <div class="card-body">
+          <img src="" alt="" />
+        </div>
+        <div class="card-body">
+          <p class="card-text">
+            {{ post.content }}
+          </p>
+          <router-link
+            @click.prevent="storePostId"
+            to="/onePost"
+            class="text-dark"
+            >Voir commentaires</router-link
+          >
+        </div>
       </div>
     </div>
   </div>
