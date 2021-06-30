@@ -123,7 +123,6 @@ exports.getOneUser = (req, res) => {
             where: {
                 id: req.params.id
             },
-            //include: [Post]
         })
         .then(users => {
             res.status(200).json(users)

@@ -3,6 +3,9 @@
     <router-link @click.prevent="deletePostId" to="/feed">Retour</router-link>
 
     <p>{{ post }}</p>
+    <div>
+      <img :src=post.image :alt=post.content>
+    </div>
     <div class="col border border-secondary rounded">
       <div class="row">
         <p>{{ post.content }}</p>

@@ -1,5 +1,9 @@
 <template>
-  <form @submit.prevent="createPost" class="col border border-dark p-3">
+  <form
+    @submit.prevent="createPost"
+    enctype="multipart/form-data"
+    class="col border border-dark p-3"
+  >
     <div class="form-row form-group">
       <input
         class="col form-control-lg"
@@ -11,7 +15,13 @@
       />
     </div>
     <div class="form-row justify-content-center">
-      <input type="file" accept="image/png, image/jpeg, image/jpg" class="btn btn-link" />
+      <input
+        type="file"
+        id="image"
+        ref="image"
+        accept="image/png, image/jpeg, image/jpg"
+        class="btn btn-link"
+      />
     </div>
     <div class="form-row justify-content-center">
       <input type="submit" class="col-2 btn btn-primary" value="Publier" />
@@ -33,7 +43,12 @@ export default {
   methods: {
     async createPost() {
       const content = this.post.content;
-      const image = this.post.image;
+      const image = this.$refs.image.files[0];
+
+      const fd = new FormData();
+      fd.append("content", content);
+      fd.append("image", image);
+
       if (!content) {
         alert("Veuillez remplir tous les champs !");
         return;
@@ -41,19 +56,13 @@ export default {
         const data = localStorage.getItem("groupomaniaUser");
         const user = JSON.parse(data);
         const token = user.token;
-        const userId = user.userId;
-        const newPost = {
-          content,
-          image,
-          userId,
-        };
+        
         const res = await fetch("http://localhost:5000/posts", {
           method: "POST",
           headers: {
             Authorization: "Bearer " + token,
-            "Content-type": "application/json",
           },
-          body: JSON.stringify(newPost),
+          body: fd,
         });
         if (res.status !== 201) {
           alert("Votre post n'a pas pu être publié !");

@@ -85,20 +85,68 @@ exports.updatePost = (req, res) => {
         })
         .then(post => {
             if (post.UserId === req.token.userId) {
-                Post.update({
-                        content: req.body.content,
-                        UserId: req.body.userId
-                    }, {
-                        where: {
-                            id: req.params.id
-                        }
-                    })
-                    .then(() => res.status(200).json({
-                        message: 'Votre post a bien été modifié !'
-                    }))
-                    .catch(error => res.status(400).json({
-                        error
-                    }));
+                const postObject = req.file ? {
+                    content: req.body.content,
+                    image: `${req.protocol}://${req.get("host")}/images/${
+                        req.file.filename
+                      }`,
+                } : {
+                    content: req.body.content
+                };
+                if (req.file) {
+                    if (post.image != null) {
+                        const filename = post.image.split("/images/")[1];
+                        fs.unlink(`./images/${filename}`, () => {
+                            Post.update({
+                                    ...postObject,
+                                    UserId: req.body.userId
+                                }, {
+                                    where: {
+                                        id: req.params.id
+                                    }
+                                })
+                                .then(() => res.status(200).json({
+                                    message: 'Votre post a bien été modifié !'
+                                }))
+                                .catch(error => res.status(400).json({
+                                    error
+                                }));
+                        })
+
+                    } else {
+                        Post.update({
+                                ...postObject,
+                                UserId: req.body.userId
+                            }, {
+                                where: {
+                                    id: req.params.id
+                                }
+                            })
+                            .then(() => res.status(200).json({
+                                message: 'Votre post a bien été modifié !'
+                            }))
+                            .catch(error => res.status(400).json({
+                                error
+                            }));
+                    }
+
+                } else {
+                    Post.update({
+                            ...postObject,
+                            UserId: req.body.userId
+                        }, {
+                            where: {
+                                id: req.params.id
+                            }
+                        })
+                        .then(() => res.status(200).json({
+                            message: 'Votre post a bien été modifié !'
+                        }))
+                        .catch(error => res.status(400).json({
+                            error
+                        }));
+
+                }
             } else {
                 res.status(401).json({
                     error: "Vous ne disposez pas des droits pour modifier ce post !"
@@ -200,19 +248,19 @@ exports.updateComment = (req, res) => {
         .then((comment) => {
             if (comment.UserId === req.token.userId) {
                 Comment.update({
-                    content: req.body.content,
-                    UserId: req.token.id,
-                }, {
-                    where: {
-                        id: req.params.id
-                    }
-                })
-                .then(() => res.status(200).json({
-                    message: 'Votre commentaire a bien été modifié !'
-                }))
-                .catch(error => res.status(400).json({
-                    error
-                }));
+                        content: req.body.content,
+                        UserId: req.token.id,
+                    }, {
+                        where: {
+                            id: req.params.id
+                        }
+                    })
+                    .then(() => res.status(200).json({
+                        message: 'Votre commentaire a bien été modifié !'
+                    }))
+                    .catch(error => res.status(400).json({
+                        error
+                    }));
             } else {
                 res.status(401).json({
                     error: "Vous ne disposez pas des droits pour modifier ce commentaire !"

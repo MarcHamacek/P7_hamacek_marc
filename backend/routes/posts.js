@@ -6,11 +6,11 @@ const postsCtrl = require('../controllers/posts');
 
 
 // Routes Posts
-router.post('/', auth, multer, postsCtrl.createPost); // TEST OK // OK
-router.get('/', postsCtrl.getAllPosts); // TEST OK // OK MANQUE IMAGE
-router.get('/:id', auth, postsCtrl.getOnePost); // TEST OK
-router.put('/:id', auth, postsCtrl.updatePost); // TEST OK
-router.delete('/:id', auth, postsCtrl.deletePost); // TEST OK
+router.post('/', auth, multer, postsCtrl.createPost);
+router.get('/', auth, postsCtrl.getAllPosts);
+router.get('/:id', auth, postsCtrl.getOnePost);
+router.put('/:id', auth, multer, postsCtrl.updatePost);
+router.delete('/:id', auth, postsCtrl.deletePost);
 
 
 // Routes Comments

@@ -24,7 +24,14 @@ export default {
   },
   methods: {
     async fetchPosts() {
-      const res = await fetch("http://localhost:5000/posts");
+      const user = JSON.parse(localStorage.getItem("groupomaniaUser"));
+      const token = user.token;
+
+      const res = await fetch("http://localhost:5000/posts", {
+        headers: {
+          Authorization: "Bearer " + token
+        }
+      });
 
       const data = await res.json();
 
