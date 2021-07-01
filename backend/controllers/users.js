@@ -20,49 +20,37 @@ exports.signup = (req, res) => {
                     message: 'Cette adresse email est déjà utilisée !'
                 })
             }
-            const regexEmail =
-                /^[a-z0-9!#$ %& '*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&' * +/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/g;
-            const regexPassword =
-                /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_#])([-+!*$@%_\w]{8,15})$/;
-
-            if (regexEmail.test(email) == true ||
-                regexPassword.test(password) == true) {
-                bcrypt
-                    .hash(req.body.password, 10)
-                    .then((hash) => {
-                        User.create({
-                                firstName: req.body.firstName,
-                                lastName: req.body.lastName,
-                                department: req.body.department,
-                                email: req.body.email,
-                                password: hash
-                            })
-                            .then((user) => res.status(201).json({
-                                message: 'Utilisateur créé !',
-                                firstName: user.firstName,
-                                lastName: user.lastName,
-                                department: user.department,
-                                email: user.email,
-                                userId: user.id,
-                                isAdmin: user.isAdmin,
-                                token: jwt.sign({
-                                        userId: user.id,
-                                        isAdmin: user.isAdmin
-                                    },
-                                    process.env.TOKEN_KEY, {
-                                        expiresIn: "24h"
-                                    }
-                                )
-                            }))
-                            .catch((error) => res.status(400).json({
-                                error
-                            }));
-                    });
-            } else {
-                res.status(400).json({
-                    error
-                })
-            }
+            bcrypt
+                .hash(req.body.password, 10)
+                .then((hash) => {
+                    User.create({
+                            firstName: req.body.firstName,
+                            lastName: req.body.lastName,
+                            department: req.body.department,
+                            email: req.body.email,
+                            password: hash
+                        })
+                        .then((user) => res.status(201).json({
+                            message: 'Utilisateur créé !',
+                            firstName: user.firstName,
+                            lastName: user.lastName,
+                            department: user.department,
+                            email: user.email,
+                            userId: user.id,
+                            isAdmin: user.isAdmin,
+                            token: jwt.sign({
+                                    userId: user.id,
+                                    isAdmin: user.isAdmin
+                                },
+                                process.env.TOKEN_KEY, {
+                                    expiresIn: "24h"
+                                }
+                            )
+                        }))
+                        .catch((error) => res.status(400).json({
+                            error
+                        }));
+                });
         })
         .catch((error) => res.status(500).json({
             error
