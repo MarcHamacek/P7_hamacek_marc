@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     async updateComment() {
-      console.log(this.comment);
+      const PostId = this.comment.PostId;
       const content = this.comment.content;
       const id = localStorage.getItem("commentId");
 
@@ -58,7 +58,10 @@ export default {
           alert("Votre commentaire n'a pas pu être modifié !");
         } else {
           localStorage.removeItem("commentId");
-          this.$router.push({ name: "OnePost" });
+          this.$router.push({
+            name: "OnePost",
+            params: { id: PostId },
+          });
         }
       }
     },
