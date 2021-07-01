@@ -2,7 +2,7 @@
   <form
     @submit.prevent="createPost"
     enctype="multipart/form-data"
-    class="col border border-dark p-3"
+    class="col pb-3 mb-3 border-bottom border-secondary"
   >
     <div class="form-row form-group">
       <input
@@ -24,7 +24,7 @@
       />
     </div>
     <div class="form-row justify-content-center">
-      <input type="submit" class="col-2 btn btn-primary" value="Publier" />
+      <input type="submit" class="col-8 col-md-6 col-lg-4 btn btn-primary" value="Publier" />
     </div>
   </form>
 </template>

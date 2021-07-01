@@ -1,58 +1,50 @@
 <template>
-  <div class="row">
-    <div class="col text-center">
-      <form
-        @submit.prevent="login"
-        class="col-sm-6 bg-white border border-dark rounded p-5"
-      >
-        <div class="form-row justify-content-center">
-          <div class="form-group col text-align-start">
-            <input
-              type="email"
-              name="email"
-              v-model="user.email"
-              class="form-control"
-              id="signinInputEmail1"
-              aria-describedby="emailHelp"
-              placeholder="Adresse e-mail"
-            />
-          </div>
-        </div>
-        <div class="form-row justify-content-center">
-          <div class="form-group col">
-            <input
-              type="password"
-              name="password"
-              v-model="user.password"
-              class="form-control"
-              id="signinInputPassword1"
-              placeholder="Mot de passe"
-            />
-          </div>
-        </div>
-        <div class="form-row justify-content-center mt-3">
-          <input
-            type="submit"
-            class="col-8 btn btn-primary"
-            value="Se connecter"
-          />
-        </div>
-        <div
-          class="
-            form-row
-            justify-content-center
-            mt-4
-            pt-4
-            border-top border-secondary
-          "
-        >
-          <router-link to="/signup" class="col-8 btn btn-success"
-            >S'incrire</router-link
-          >
-        </div>
-      </form>
+  <form
+    @submit.prevent="login"
+    class="col col-md-6 bg-white border border-dark rounded p-5 text-center"
+  >
+    <div class="form-row justify-content-center">
+      <div class="form-group col text-align-start">
+        <input
+          type="email"
+          name="email"
+          v-model="user.email"
+          class="form-control"
+          id="signinInputEmail1"
+          aria-describedby="emailHelp"
+          placeholder="Adresse e-mail"
+        />
+      </div>
     </div>
-  </div>
+    <div class="form-row justify-content-center">
+      <div class="form-group col">
+        <input
+          type="password"
+          name="password"
+          v-model="user.password"
+          class="form-control"
+          id="signinInputPassword1"
+          placeholder="Mot de passe"
+        />
+      </div>
+    </div>
+    <div class="form-row justify-content-center mt-3">
+      <input type="submit" class="col-8 btn btn-primary" value="Se connecter" />
+    </div>
+    <div
+      class="
+        form-row
+        justify-content-center
+        mt-4
+        pt-4
+        border-top border-secondary
+      "
+    >
+      <router-link to="/signup" class="col-8 text-primary"
+        >Vous n'avez pas de compte ?</router-link
+      >
+    </div>
+  </form>
 </template>
 
 <script>

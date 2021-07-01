@@ -17,38 +17,70 @@ const routes = [{
   {
     path: '/feed',
     name: 'Feed',
-    component: () => import('../views/Feed.vue')
+    component: () => import('../views/Feed.vue'),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/usersList',
     name: 'UsersList',
-    component: () => import('../views/UsersList')
+    component: () => import('../views/UsersList'),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/profileUpdate',
     name: 'ProfileUpdate',
-    component: () => import('../views/ProfileUpdate')
+    component: () => import('../views/ProfileUpdate'),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
-    path: '/postUpdate',
+    path: '/postUpdate/:id',
     name: 'PostUpdate',
-    component: () => import('../views/PostUpdate')
+    component: () => import('../views/PostUpdate'),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
-    path: '/onePost',
+    path: '/post/:id',
     name: 'OnePost',
-    component: () => import('../views/OnePost')
+    component: () => import('../views/OnePost'),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/updateComment',
     name: 'UpdateComment',
-    component: () => import('../views/UpdateComment')
+    component: () => import('../views/UpdateComment'),
+    meta: {
+      requiresAuth: true
+    }
   },
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (localStorage.getItem("groupomaniaUser") == null) {
+      next({
+        name: "Home"
+      });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
 })
 
 export default router

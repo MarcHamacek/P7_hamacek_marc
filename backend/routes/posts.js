@@ -16,6 +16,7 @@ router.delete('/:id', auth, postsCtrl.deletePost);
 // Routes Comments
 router.post('/:id/comments', auth, postsCtrl.commentPost);
 router.get('/:id/comments', postsCtrl.getAllComments);
+router.get('/comments/:id', postsCtrl.getOneComment);
 router.put('/comments/:id', auth, postsCtrl.updateComment);
 router.delete('/comments/:id', auth, postsCtrl.deleteComment);
 

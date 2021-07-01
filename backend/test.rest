@@ -98,8 +98,7 @@ Content-Type: application/json
 
 ###
 // Get all comments from a post
-GET http://localhost:5000/posts/1/comments
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTYyMDkwODk3MCwiZXhwIjoxNjIwOTk1MzcwfQ.8WM_LkGB1an6ATLR1AnF36BZOE5uQfVQJYFnpJbZUDU
+GET http://localhost:5000/posts/comments/18
 
 ###
 // Delete a comment

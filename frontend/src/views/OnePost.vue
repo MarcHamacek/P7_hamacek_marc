@@ -1,55 +1,79 @@
 <template>
-  <div class="post">
-    <router-link @click.prevent="deletePostId" to="/feed">Retour</router-link>
+  <div class="row justify-content-around mb-5 pb-3">
+    <div class="col col-md-8 col-xl-6">
+      <router-link to="/feed">Retour</router-link>
 
-    <p>{{ post }}</p>
-    <div>
-      <img :src=post.image :alt=post.content>
-    </div>
-    <div class="col border border-secondary rounded">
-      <div class="row">
-        <p>{{ post.content }}</p>
-      </div>
-      <div class="row justify-content-center">
-        <div class="card-body border border-dark">
-          <div class="row">
+      <div class="card mb-5">
+        <div class="card-body pl-4 pr-4 pb-0 pt-1 border-bottom border-light">
+          <div class="row justify-content-between pb-0 pt-0">
+            <p class="card-text font-weight-bold">
+              {{ post.User.firstName }} {{ post.User.lastName }}
+            </p>
+          </div>
+          <div class="row pt-0 mt-0">
+            <p class="card-text font-italic">{{ post.updatedAt }}</p>
+          </div>
+        </div>
+        <img
+          v-if="post.image"
+          class="card-img-top"
+          :src="post.image"
+          :alt="post.content"
+        />
+        <div class="card-body mt-2 mb-2 bg-white">
+          <h5 class="card-title">{{ post.content }}</h5>
+        </div>
+        <div class="card-body border border-light">
+          <div class="row justify-content-center">
             <input
+              class="col-7"
               type="text"
               placeholder="Commentez..."
               name="comment"
               v-model="post.Comments.content"
             />
           </div>
-          <div class="row">
+          <div class="row justify-content-center mt-2">
             <input
               @click.prevent="commentPost"
-              class="btn btn-primary"
+              class="btn btn-primary col-4"
               type="submit"
               value="Commenter"
             />
           </div>
         </div>
-      </div>
-      <div :key="comment.id" v-for="comment in post.Comments" class="row">
-        <p>{{ comment.User.firstName }} {{ comment.User.lastName }}</p>
-        <p>{{ comment.updatedAt }}</p>
-        <p>{{ comment.content }}</p>
-        <p>{{ comment.id }}</p>
-        <p>
-          <router-link
-            to="/updateComment"
-            @click.prevent="storeCommentId(comment.id)"
-            ><i class="far fa-edit text-dark"></i
-          ></router-link>
-        </p>
-        <p>
-          <a href="#" type="button"
-            ><i
-              @click.prevent="deleteComment(comment.id)"
-              class="fas fa-times text-danger"
-            ></i
-          ></a>
-        </p>
+        <div v-if="post.Comments" class="card-body">
+          <ul class="list-group list-group-flush">
+            <li
+              :key="comment.id"
+              v-for="comment in post.Comments"
+              class="list-group-item"
+            >
+              <p>{{ comment.User.firstName }} {{ comment.User.lastName }}</p>
+              <p>{{ comment.updatedAt }}</p>
+              <p>{{ comment.content }}</p>
+              <p>{{ comment.id }}</p>
+              <p>
+                <router-link
+                  to="/updateComment"
+                  @click.prevent="storeCommentId(comment.id)"
+                  ><i class="far fa-edit text-dark"></i
+                ></router-link>
+              </p>
+              <p>
+                <a
+                  v-if="user.id === comment.UserId || user.isAdmin == true"
+                  href="#"
+                  type="button"
+                  ><i
+                    @click.prevent="deleteComment(comment.id)"
+                    class="fas fa-times text-danger"
+                  ></i
+                ></a>
+              </p>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -60,6 +84,7 @@ export default {
   name: "OnePost",
   data() {
     return {
+      user: {},
       post: {
         User: [],
         Comments: [],
@@ -70,7 +95,7 @@ export default {
     async fetchOnePost() {
       const user = JSON.parse(localStorage.getItem("groupomaniaUser"));
       const token = user.token;
-      const id = localStorage.getItem("postId");
+      const id = this.$route.params.id;
 
       const res = await fetch(`http://localhost:5000/posts/${id}`, {
         headers: {
@@ -89,7 +114,7 @@ export default {
       const user = JSON.parse(localStorage.getItem("groupomaniaUser"));
       const token = user.token;
 
-      const postId = localStorage.getItem("postId");
+      const postId = this.$route.params.id;
 
       const comment = { content, token, postId };
 
@@ -135,20 +160,22 @@ export default {
         this.$router.go();
       }
     },
-    deletePostId() {
-      localStorage.removeItem("postId");
+    getUserConnected() {
+      const res = localStorage.getItem("groupomaniaUser");
+
+      const data = JSON.parse(res);
+
+      return data;
     },
     storeCommentId(id) {
       const commentId = id;
       localStorage.setItem("commentId", JSON.stringify(commentId));
       console.log(commentId);
     },
-    clearLocalStorage() {
-      localStorage.removeItem("postId");
-    },
   },
   async created() {
     this.post = await this.fetchOnePost();
+    this.user = this.getUserConnected();
   },
 };
 </script>

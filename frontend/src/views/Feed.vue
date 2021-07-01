@@ -1,6 +1,8 @@
 <template>
   <div class="container-fluid col col-lg-10">
-    <Dashboard />
+    <div class="row justify-content-around">
+      <Dashboard />
+    </div>
     <div class="row justify-content-around">
       <Posts :posts="posts" />
     </div>
@@ -29,8 +31,8 @@ export default {
 
       const res = await fetch("http://localhost:5000/posts", {
         headers: {
-          Authorization: "Bearer " + token
-        }
+          Authorization: "Bearer " + token,
+        },
       });
 
       const data = await res.json();

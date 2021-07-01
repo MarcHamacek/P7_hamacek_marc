@@ -2,7 +2,7 @@
   <div class="container-fluid pt-5 pb-5">
     <div class="row mt-5 mb-5">
       <form
-        class="col-10 col-xl-4 mx-auto bg-white border border-dark rounded p-5"
+        class="col col-md-6 col-xl-4 mx-auto bg-white border border-dark rounded p-5"
       >
         <div class="form-row justify-content-center">
           <div class="form-group col-5 text-align-start">
@@ -165,22 +165,6 @@ export default {
           localStorage.clear();
           this.$router.push({ name: "Home" });
         }
-        // const data = await res.json();
-
-        // // Optimiser : groupomaniaUser à la place de data idem pour login
-        // const groupomaniaUser = {
-        //   userId: data.userId,
-        //   firstName: data.firstName,
-        //   lastName: data.lastName,
-        //   department: data.department,
-        //   email: data.email,
-        //   token: data.token,
-        // };
-        // localStorage.setItem(
-        //   "groupomaniaUser",
-        //   JSON.stringify(groupomaniaUser)
-        // );
-        //
       }
     },
   },

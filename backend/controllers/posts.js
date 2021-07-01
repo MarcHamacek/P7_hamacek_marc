@@ -131,21 +131,23 @@ exports.updatePost = (req, res) => {
                     }
 
                 } else {
-                    Post.update({
-                            ...postObject,
-                            UserId: req.body.userId
-                        }, {
-                            where: {
-                                id: req.params.id
-                            }
-                        })
-                        .then(() => res.status(200).json({
-                            message: 'Votre post a bien été modifié !'
-                        }))
-                        .catch(error => res.status(400).json({
-                            error
-                        }));
-
+                    const filename = post.image.split("/images/")[1];
+                    fs.unlink(`./images/${filename}`, () => {
+                        Post.update({
+                                ...postObject,
+                                UserId: req.body.userId
+                            }, {
+                                where: {
+                                    id: req.params.id
+                                }
+                            })
+                            .then(() => res.status(200).json({
+                                message: 'Votre post a bien été modifié !'
+                            }))
+                            .catch(error => res.status(400).json({
+                                error
+                            }));
+                    })
                 }
             } else {
                 res.status(401).json({
@@ -237,6 +239,20 @@ exports.getAllComments = (req, res) => {
             error
         }));
 };
+
+// Read one comment
+exports.getOneComment = (req, res) => {
+    Comment.findOne({
+            where: {
+                id: req.params.id
+            },
+            include: [User]
+        })
+        .then(comment => res.status(200).json(comment))
+        .catch(error => res.status(404).json({
+            error
+        }));
+}
 
 // Update a comment on a post
 exports.updateComment = (req, res) => {

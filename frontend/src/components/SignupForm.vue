@@ -3,7 +3,7 @@
     <div class="row mt-5 mb-5">
       <form
         @submit.prevent="signup"
-        class="col-10 col-xl-4 mx-auto bg-white border border-dark rounded p-5"
+        class="col col-md-6 col-xl-4 mx-auto bg-white border border-dark rounded p-5"
       >
         <div class="form-row justify-content-center">
           <div class="form-group col-5 text-align-start">
@@ -84,7 +84,7 @@
             border-top border-secondary
           "
         >
-          <router-link to="/" class="text-secondary">Retour</router-link>
+          <router-link to="/" class="text-dark">Vous avez déjà un compte ?</router-link>
         </div>
       </form>
     </div>
