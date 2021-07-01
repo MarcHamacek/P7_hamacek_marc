@@ -58,6 +58,7 @@
                 </p>
                 <p>
                   <router-link
+                    v-if="user.id === comment.UserId"
                     to="/updateComment"
                     @click.prevent="storeCommentId(comment.id)"
                     ><i class="far fa-edit text-dark"></i></router-link
