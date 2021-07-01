@@ -1,8 +1,11 @@
 <template>
   <div class="row justify-content-around mb-5 pb-3">
     <div class="col col-md-8 col-xl-6">
-      <router-link to="/feed">Retour</router-link>
-
+      <div class="row justify-content-center">
+        <router-link to="/feed" class="btn btn-dark text-center mt-2 mb-2"
+          >Retour</router-link
+        >
+      </div>
       <div class="card mb-5">
         <div class="card-body pl-4 pr-4 pb-0 pt-1 border-bottom border-light">
           <div class="row justify-content-between pb-0 pt-0">
@@ -49,28 +52,33 @@
               v-for="comment in post.Comments"
               class="list-group-item"
             >
-              <p>{{ comment.User.firstName }} {{ comment.User.lastName }}</p>
-              <p>{{ comment.updatedAt }}</p>
-              <p>{{ comment.content }}</p>
-              <p>{{ comment.id }}</p>
-              <p>
-                <router-link
-                  to="/updateComment"
-                  @click.prevent="storeCommentId(comment.id)"
-                  ><i class="far fa-edit text-dark"></i
-                ></router-link>
-              </p>
-              <p>
-                <a
-                  v-if="user.id === comment.UserId || user.isAdmin == true"
-                  href="#"
-                  type="button"
-                  ><i
-                    @click.prevent="deleteComment(comment.id)"
-                    class="fas fa-times text-danger"
-                  ></i
-                ></a>
-              </p>
+              <div class="row justify-content-between">
+                <p class="card-text">
+                  {{ comment.User.firstName }} {{ comment.User.lastName }}
+                </p>
+                <p>
+                  <router-link
+                    to="/updateComment"
+                    @click.prevent="storeCommentId(comment.id)"
+                    ><i class="far fa-edit text-dark"></i></router-link
+                  ><a
+                    v-if="user.id === comment.UserId || user.isAdmin == true"
+                    href="#"
+                    type="button"
+                    class="ml-2"
+                    ><i
+                      @click.prevent="deleteComment(comment.id)"
+                      class="fas fa-times text-danger"
+                    ></i
+                  ></a>
+                </p>
+              </div>
+              <div class="row">
+                <p>{{ comment.updatedAt }}</p>
+              </div>
+              <div class="row">
+                <h5>{{ comment.content }}</h5>
+              </div>
             </li>
           </ul>
         </div>

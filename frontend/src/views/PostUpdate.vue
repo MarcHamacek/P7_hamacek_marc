@@ -1,32 +1,38 @@
 <template>
-  <div class="row justify-content-around">
-    <form
-      @submit.prevent="modifyPost"
-      class="col col-md-9 col-xl-7 border border-dark p-3"
-    >
-      <div class="form-row form-group justify-content-center">
-        <input
-          class="col form-control-lg"
-          aria-label="large"
-          type="text"
-          name="content"
-          v-model="post.content"
-        />
-      </div>
-      <div class="form-row justify-content-center">
-        <input
-          type="file"
-          id="image"
-          ref="image"
-          accept="image/png, image/jpeg, image/jpg"
-          class="btn btn-link"
-        />
-      </div>
-      <div class="form-row justify-content-center">
-        <input type="submit" class="col-2 btn btn-primary" value="Modifier" />
-        <router-link class="col-2 btn btn-dark" to="/feed">Retour</router-link>
-      </div>
-    </form>
+  <div class="justify-content-around">
+    <div class="row justify-content-center">
+      <router-link to="/feed" class="btn btn-dark text-center mt-2 mb-2"
+        >Retour</router-link
+      >
+    </div>
+    <div class="row justify-content-center">
+      <form
+        @submit.prevent="modifyPost"
+        class="col col-md-9 col-xl-7 border border-dark p-3"
+      >
+        <div class="form-row form-group justify-content-center">
+          <input
+            class="col form-control-lg"
+            aria-label="large"
+            type="text"
+            name="content"
+            v-model="post.content"
+          />
+        </div>
+        <div class="form-row justify-content-center">
+          <input
+            type="file"
+            id="image"
+            ref="image"
+            accept="image/png, image/jpeg, image/jpg"
+            class="btn btn-link"
+          />
+        </div>
+        <div class="form-row justify-content-center">
+          <input type="submit" class="col-2 btn btn-primary" value="Modifier" />
+        </div>
+      </form>
+    </div>
   </div>
 </template>
 <script>

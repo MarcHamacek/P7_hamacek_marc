@@ -1,7 +1,7 @@
 <template>
   <div class="col">
     <div class="row justify-content-center">
-      <router-link to="/feed" class="btn btn-light text-center">
+      <router-link to="/feed" class="btn btn-dark text-center mt-2 mb-2">
         Retour
       </router-link>
     </div>
