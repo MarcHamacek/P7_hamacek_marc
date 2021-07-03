@@ -55,7 +55,7 @@ const routes = [{
     }
   },
   {
-    path: '/updateComment',
+    path: '/updateComment/:id',
     name: 'UpdateComment',
     component: () => import('../views/UpdateComment'),
     meta: {

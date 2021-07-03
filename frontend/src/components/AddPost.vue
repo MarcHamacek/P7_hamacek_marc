@@ -24,7 +24,11 @@
       />
     </div>
     <div class="form-row justify-content-center">
-      <input type="submit" class="col-8 col-md-6 col-lg-4 btn btn-primary" value="Publier" />
+      <input
+        type="submit"
+        class="col-8 col-md-6 col-lg-4 btn btn-primary"
+        value="Publier"
+      />
     </div>
   </form>
 </template>
@@ -56,7 +60,7 @@ export default {
         const data = localStorage.getItem("groupomaniaUser");
         const user = JSON.parse(data);
         const token = user.token;
-        
+
         const res = await fetch("http://localhost:5000/posts", {
           method: "POST",
           headers: {

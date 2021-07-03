@@ -7,8 +7,8 @@ Content-Type: application/json
     "firstName": "Marco",
     "lastName": "Polo",
     "department": "Admin",
-    "email": "marcopoloo@gmail.com",
-    "password": "1234"
+    "email": "marc.hamacek@gmail.com",
+    "password": "$Polochon33"
 }
 
 ###

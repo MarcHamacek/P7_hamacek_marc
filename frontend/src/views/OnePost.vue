@@ -58,11 +58,14 @@
                 </p>
                 <p>
                   <router-link
-                    to="/updateComment"
-                    @click.prevent="storeCommentId(comment.id)"
+                    v-if="user.userId === comment.UserId"
+                    :to="{ name: 'UpdateComment', params: { id: comment.id } }"
                     ><i class="far fa-edit text-dark"></i></router-link
                   ><a
-                    v-if="user.id === comment.UserId || user.isAdmin == true"
+                    v-if="
+                      user.userId === comment.UserId ||
+                      user.isAdmin == true
+                    "
                     href="#"
                     type="button"
                     class="ml-2"
@@ -174,11 +177,6 @@ export default {
       const data = JSON.parse(res);
 
       return data;
-    },
-    storeCommentId(id) {
-      const commentId = id;
-      localStorage.setItem("commentId", JSON.stringify(commentId));
-      console.log(commentId);
     },
   },
   async created() {

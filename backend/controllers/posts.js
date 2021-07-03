@@ -131,23 +131,21 @@ exports.updatePost = (req, res) => {
                     }
 
                 } else {
-                    const filename = post.image.split("/images/")[1];
-                    fs.unlink(`./images/${filename}`, () => {
-                        Post.update({
-                                ...postObject,
-                                UserId: req.body.userId
-                            }, {
-                                where: {
-                                    id: req.params.id
-                                }
-                            })
-                            .then(() => res.status(200).json({
-                                message: 'Votre post a bien été modifié !'
-                            }))
-                            .catch(error => res.status(400).json({
-                                error
-                            }));
-                    })
+                    Post.update({
+                            ...postObject,
+                            UserId: req.body.userId
+                        }, {
+                            where: {
+                                id: req.params.id
+                            }
+                        })
+                        .then(() => res.status(200).json({
+                            message: 'Votre post a bien été modifié !'
+                        }))
+                        .catch(error => res.status(400).json({
+                            error
+                        }));
+
                 }
             } else {
                 res.status(401).json({

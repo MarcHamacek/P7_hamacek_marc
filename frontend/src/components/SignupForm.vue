@@ -3,7 +3,14 @@
     <div class="row mt-5 mb-5">
       <form
         @submit.prevent="signup"
-        class="col col-md-6 col-xl-4 mx-auto bg-white border border-dark rounded p-5"
+        class="
+          col col-md-6 col-xl-4
+          mx-auto
+          bg-white
+          border border-dark
+          rounded
+          p-5
+        "
       >
         <div class="form-row justify-content-center">
           <div class="form-group col-5 text-align-start">
@@ -84,7 +91,9 @@
             border-top border-secondary
           "
         >
-          <router-link to="/" class="text-dark">Vous avez déjà un compte ?</router-link>
+          <router-link to="/" class="text-dark"
+            >Vous avez déjà un compte ?</router-link
+          >
         </div>
       </form>
     </div>
@@ -143,21 +152,26 @@ export default {
           body: JSON.stringify(userSignup),
         });
         const data = await res.json();
+
+        if (res.status !== 201) {
+          alert("Cette adresse email est déjà utilisée");
+        } else {
+          const groupomaniaUser = {
+            userId: data.userId,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            department: data.department,
+            email: data.email,
+            token: data.token,
+            isAdmin: data.isAdmin,
+          };
+          localStorage.setItem(
+            "groupomaniaUser",
+            JSON.stringify(groupomaniaUser)
+          );
+          this.$router.push({ name: "Feed" });
+        }
         // Optimiser : groupomaniaUser à la place de data idem pour login
-        const groupomaniaUser = {
-          userId: data.userId,
-          firstName: data.firstName,
-          lastName: data.lastName,
-          department: data.department,
-          email: data.email,
-          token: data.token,
-          isAdmin: data.isAdmin,
-        };
-        localStorage.setItem(
-          "groupomaniaUser",
-          JSON.stringify(groupomaniaUser)
-        );
-        this.$router.push({ name: "Feed" });
       }
     },
   },

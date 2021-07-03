@@ -1,18 +1,26 @@
 <template>
   <div class="row justify-content-around">
-    <div class="col col-md-9 col-xl-7 p-3">
+    <div class="col col-md-9 col-xl-7 p-3 ml-2 mr-2">
+      <div class="row justify-content-center">
+        <router-link
+          :to="{ name: 'OnePost', params: { id: comment.PostId } }"
+          class="btn btn-dark text-center mt-2 mb-2"
+          >Retour</router-link
+        >
+      </div>
       <form @submit.prevent="updateComment">
         <div class="row justify-content-center">
           <div class="card-body border border-dark">
-            <div class="row">
+            <div class="row justify-content-center">
               <input
+              class="col-8 form-control-lg"
                 type="text"
                 placeholder="Commentez..."
                 name="comment"
                 v-model="comment.content"
               />
             </div>
-            <div class="row">
+            <div class="row justify-content-center mt-4">
               <input class="btn btn-primary" type="submit" value="Modifier" />
             </div>
           </div>
@@ -35,7 +43,7 @@ export default {
     async updateComment() {
       const PostId = this.comment.PostId;
       const content = this.comment.content;
-      const id = localStorage.getItem("commentId");
+      const id = this.$route.params.id;
 
       const data = localStorage.getItem("groupomaniaUser");
       const user = JSON.parse(data);
@@ -69,7 +77,7 @@ export default {
       const user = JSON.parse(localStorage.getItem("groupomaniaUser"));
       const token = user.token;
 
-      const id = localStorage.getItem("commentId");
+      const id = this.$route.params.id;
 
       const res = await fetch(`http://localhost:5000/posts/comments/${id}`, {
         headers: {
@@ -80,10 +88,6 @@ export default {
       const data = await res.json();
 
       return data;
-    },
-    deleteCommentId() {
-      localStorage.removeItem("commentId");
-      console.log(this.comment);
     },
   },
   async created() {

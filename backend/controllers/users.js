@@ -5,6 +5,17 @@ const {
 } = require('body-parser');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const PasswordValidator = require('password-validator');
+
+const passwordSchema = new PasswordValidator();
+passwordSchema
+    .is().min(8)
+    .is().max(15)
+    .has().uppercase()
+    .has().lowercase()
+    .has().digits()
+    .has().symbols()
+    .has().not().spaces();
 
 
 // Create an account
@@ -19,6 +30,11 @@ exports.signup = (req, res) => {
                 return res.status(401).json({
                     message: 'Cette adresse email est déjà utilisée !'
                 })
+            }
+            if (!passwordSchema.validate(req.body.password)) {
+                return res.status(400).json({
+                    message: 'Le mot de passe doit contenir une majuscule, une minuscule, un symbole et un chiffre. Sa longueur doit être entre 8 et 15 caractères'
+                });
             }
             bcrypt
                 .hash(req.body.password, 10)
