@@ -1,31 +1,30 @@
-# Projet 7 - Réseau social d'entreprise - GROUPOMANIA
+# Project 7 - Intern social network - GROUPOMANIA
 
-
-Ce projet a été développé avec Express, Sequelize et MySQL pour le Backend, et avec Vue.js pour le Frontend
+This project has been developed with Express, Sequelize and MySQL for the backend, and with Vue.js for the Frontend.
 
 
 ## BACKEND
 
-1) Dans le dossier Backend, créez un fichier `.env` avec:
+1) In the folder `Backend`, create a file `.env` with:
 
 ```
-DB_NAME= nom de la base de données
-DB_USER= nom d'utilisateur
-DB_PW= mot de passe de l'utilisateur
-DB_HOST= nom du host
-TOKEN_KEY= clé de chiffrement JSON WEB TOKEN
+DB_NAME= database name
+DB_USER= user name
+DB_PW= user password
+DB_HOST= host name
+TOKEN_KEY= encryption key JSON WEB TOKEN
 ```
 
-2) Dans votre terminal, `cd backend` puis `npm install`
+2) In your terminal, `cd backend` and then `npm install`
 
-3) Démarrer le projet: `node server`
+3) Start the project: `node server`
 
 
 ## FRONTEND
 
-1) Pour installer le projet, `cd frontend` puis `npm install`
+1) To install the project, `cd frontend` and then `npm install`
 
-2) Pour démarrer le projet, `npm run serve`
+2) Start the project, `npm run serve`
 
 
 ### Customize configuration
